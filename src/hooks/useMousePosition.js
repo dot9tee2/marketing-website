@@ -25,19 +25,20 @@ export const useMousePosition = (throttleMs = 16) => {
     const animatePosition = (timestamp) => {
       if (timestamp - lastUpdate >= throttleMs) {
         lastUpdate = timestamp;
-        // Additional smooth animation logic can be added here
       }
       rafId = requestAnimationFrame(animatePosition);
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("touchmove", handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    window.addEventListener("touchmove", handleMouseMove, { passive: true });
     rafId = requestAnimationFrame(animatePosition);
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("touchmove", handleMouseMove);
-      cancelAnimationFrame(rafId);
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+      }
     };
   }, [handleMouseMove, throttleMs]);
 

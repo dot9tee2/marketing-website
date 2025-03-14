@@ -148,7 +148,7 @@ const TestimonialsSection = () => {
           HMS Marketing
         </p>
 
-        <div className="max-w-4xl mx-auto relative">
+        <div className="max-w-6xl mx-auto pointer-events-auto">
           <div className="relative h-[350px] overflow-hidden">
             {TESTIMONIALS.map((testimonial, index) => (
               <TestimonialCard
@@ -323,9 +323,9 @@ const MainContent = () => {
         )}
 
         <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center max-w-3xl mx-auto pointer-events-auto">
+          <div className="max-w-6xl mx-auto pointer-events-auto">
             <h1
-              className="text-5xl md:text-6xl font-bold mb-6 text-white flex flex-col items-center gap-2"
+              className="text-5xl md:text-6xl font-bold mb-6 text-white flex flex-col items-center gap-2 text-center max-w-6xl mx-auto"
               data-aos="fade-down"
               data-aos-delay="200"
             >
@@ -333,9 +333,9 @@ const MainContent = () => {
                 <TypeAnimation
                   sequence={[
                     "Elevate Your Brand with",
-                    2000,
+                    3000,
                     "Grow Your Business with",
-                    2000,
+                    3000,
                   ]}
                   wrapper="span"
                   speed={30}
@@ -348,7 +348,7 @@ const MainContent = () => {
                   textShadow: `0 0 10px rgba(141, 198, 63, 0.3)`,
                 }}
               >
-                HMS Marketing
+                HMS Marketing Solutions
                 <span className="absolute -bottom-2 left-0 w-full h-1 bg-[#8DC63F] animate-pulse"></span>
               </span>
             </h1>
@@ -398,8 +398,8 @@ const MainContent = () => {
             data-aos="fade-up"
             data-aos-delay="100"
           >
-            Join hundreds of businesses that trust HMS Marketing for their
-            digital growth
+            Join hundreds of businesses that trust HMS Marketing Solutions for
+            their digital growth
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center justify-items-center">
             {[

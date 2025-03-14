@@ -7,8 +7,8 @@ import {
 import { HelmetProvider } from "react-helmet-async";
 import { AnimatePresence, motion } from "framer-motion";
 import { Suspense, lazy, useEffect } from "react";
-import Navbar from "./components/navbar";
-import Footer from "./components/footer";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import ErrorBoundary from "./components/ErrorBoundary";
 import Loading from "./components/Loading";
 
