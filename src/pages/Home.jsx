@@ -231,13 +231,13 @@ const Home = () => {
     schema: {
       "@context": "https://schema.org",
       "@type": "WebPage",
-      name: "Home | Your Site Name",
+      name: "Home | HMS Marketing Solutions",
       description:
         "Welcome to our digital solutions hub. We offer web development, digital marketing, and business growth services.",
       url: window.location.href,
       mainEntity: {
         "@type": "Organization",
-        name: "Your Site Name",
+        name: "hmsmarketingsolutions.com",
         url: window.location.origin,
       },
     },
@@ -310,7 +310,7 @@ const MainContent = () => {
         <motion.div
           className="absolute inset-0 pointer-events-none"
           style={{
-            background: `radial-gradient(circle at ${position.x}px ${position.y}px, rgba(141, 198, 63, 0.15) 0%, transparent 35%)`,
+            background: `radial-gradient(circle at ${position.x}px ${position.y}px, rgba(142, 198, 63, 0.51) 0%, transparent 35%)`,
             opacity: 0.6,
           }}
         />

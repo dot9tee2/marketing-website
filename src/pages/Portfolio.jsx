@@ -14,7 +14,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";
-
+import HeroSection from "../components/HeroSection";
 const Portfolio = () => {
   const [filter, setFilter] = useState("all");
   const [viewMode, setViewMode] = useState("grid"); // grid or timeline
@@ -222,57 +222,20 @@ const Portfolio = () => {
       ? projects
       : projects.filter((project) => project.category === filter);
 
-  if (isLoading) {
-    return (
-      <div className="fixed inset-0 bg-black flex items-center justify-center z-50">
-        <div className="w-16 h-16 border-4 border-[#8DC63F] border-t-transparent rounded-full animate-spin" />
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen">
       <Helmet>
-        <title>Portfolio - HMS Marketing Solution's Success Stories</title>
+        <title>Portfolio - HMS Marketing Solutions Success Stories</title>
         <meta
           name="description"
           content="Explore our portfolio of successful digital marketing campaigns, branding projects, and marketing strategies that have transformed businesses."
         />
       </Helmet>
 
-      {/* Hero Section */}
-      <section className="relative min-h-[60vh] flex items-center bg-black text-white overflow-hidden">
-        <div
-          className="absolute inset-0 opacity-50"
-          style={{
-            background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(141, 198, 63, 0.3) 0%, transparent 60%)`,
-          }}
-        />
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-6xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent"
-              style={{
-                backgroundImage:
-                  "linear-gradient(135deg, #ffffff 0%, #8DC63F 100%)",
-              }}
-            >
-              Our Success Stories
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-xl md:text-2xl text-gray-300"
-            >
-              Transforming visions into digital success
-            </motion.p>
-          </div>
-        </div>
-      </section>
+      <HeroSection
+        title="Our Success Stories"
+        subtitle="Transforming visions into digital success"
+      />
 
       {/* Statistics Section */}
       <section className="py-16 bg-white" ref={statsRef}>
