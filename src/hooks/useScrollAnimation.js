@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useWindowSize } from "./useWindowSize";
 
 export const useScrollAnimation = (options = {}) => {
   const {
@@ -7,6 +8,13 @@ export const useScrollAnimation = (options = {}) => {
     rootMargin = "0px",
     triggerOnce = true,
   } = options;
+  
+  const { isMobile } = useWindowSize();
+  
+  // Use a lower threshold on mobile devices for better performance
+  const mobileThreshold = isMobile ? 0.05 : threshold;
+  // Use a larger root margin on mobile to trigger animations earlier
+  const mobileRootMargin = isMobile ? "10px" : rootMargin;
 
   const [isVisible, setIsVisible] = useState(false);
   const elementRef = useRef(null);
@@ -30,9 +38,9 @@ export const useScrollAnimation = (options = {}) => {
         }
       },
       {
-        threshold,
+        threshold: mobileThreshold,
         root,
-        rootMargin,
+        rootMargin: mobileRootMargin,
       }
     );
 
@@ -43,7 +51,7 @@ export const useScrollAnimation = (options = {}) => {
         observer.unobserve(currentElement);
       }
     };
-  }, [threshold, root, rootMargin, triggerOnce]);
+  }, [mobileThreshold, root, mobileRootMargin, triggerOnce, isMobile]);
 
   return [elementRef, isVisible];
 };

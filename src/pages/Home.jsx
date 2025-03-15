@@ -13,7 +13,6 @@ import "aos/dist/aos.css";
 import { TypeAnimation } from "react-type-animation";
 import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";
-import { useSwipeable } from "react-swipeable";
 import { motion } from "framer-motion";
 import SEO from "../components/SEO";
 import LazyImage from "../components/LazyImage";
@@ -181,16 +180,19 @@ const TestimonialsSection = () => {
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const { isMobile } = useWindowSize();
 
   useEffect(() => {
-    // Initialize AOS animation library
+    // Initialize AOS animation library with mobile-friendly settings
     AOS.init({
-      duration: 800,
-      once: false,
-      mirror: true,
-      offset: 50,
+      duration: isMobile ? 600 : 800,
+      once: isMobile ? true : false, // Set to true on mobile to prevent re-animation
+      mirror: false, // Disable mirror effect on mobile
+      offset: isMobile ? 30 : 50, // Smaller offset on mobile
       delay: 0,
       easing: "ease-out-cubic",
+      disable: 'phone', // Disable AOS on phones if it's causing performance issues
+      throttleDelay: 99, // Increase throttle delay for better performance
     });
 
     const checkAssetsLoaded = () => {
@@ -210,7 +212,7 @@ const Home = () => {
         clearTimeout(timer);
       };
     }
-  }, []);
+  }, [isMobile]);
 
   // Refresh AOS when loading state changes
   useEffect(() => {
@@ -272,39 +274,15 @@ const MainContent = () => {
   const [ctaRef, isCtaVisible] = useScrollAnimation();
   const [servicesRef, isServicesVisible] = useScrollAnimation();
 
-  // Swipe handlers for mobile
-  const handlers = useSwipeable({
-    onSwipedUp: () => {
-      const nextSection = document.elementFromPoint(
-        window.innerWidth / 2,
-        window.innerHeight / 2 + 100
-      );
-      if (nextSection) {
-        nextSection.scrollIntoView({ behavior: "smooth" });
-      }
-    },
-    onSwipedDown: () => {
-      const prevSection = document.elementFromPoint(
-        window.innerWidth / 2,
-        window.innerHeight / 2 - 100
-      );
-      if (prevSection) {
-        prevSection.scrollIntoView({ behavior: "smooth" });
-      }
-    },
-    preventDefaultTouchmoveEvent: true,
-    trackMouse: false,
-  });
-
   return (
-    <div className="relative" {...handlers}>
+    <div className="relative">
       {/* Hero Section */}
       <motion.section
         ref={heroRef}
         initial="hidden"
         animate={isHeroVisible ? "visible" : "hidden"}
         variants={scrollAnimationVariants}
-        className="min-h-screen flex items-center relative bg-black text-white overflow-hidden"
+        className="min-h-[90vh] md:min-h-screen flex items-center relative bg-black text-white overflow-hidden"
       >
         {/* Optimized cursor glow effect */}
         <motion.div
@@ -315,21 +293,21 @@ const MainContent = () => {
           }}
         />
 
-        {/* Mobile swipe indicator */}
+        {/* Scroll indicator instead of swipe */}
         {isMobile && (
           <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white/50 text-sm animate-bounce">
-            Swipe up to explore
+            Scroll down to explore
           </div>
         )}
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-6xl mx-auto pointer-events-auto">
             <h1
-              className="text-5xl md:text-6xl font-bold mb-6 text-white flex flex-col items-center gap-2 text-center max-w-6xl mx-auto"
+              className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-white flex flex-col items-center gap-2 text-center max-w-6xl mx-auto"
               data-aos="fade-down"
               data-aos-delay="200"
             >
-              <div className="h-[72px] flex items-center">
+              <div className="h-[60px] sm:h-[72px] flex items-center">
                 <TypeAnimation
                   sequence={[
                     "Elevate Your Brand with",
@@ -353,7 +331,7 @@ const MainContent = () => {
               </span>
             </h1>
             <p
-              className="text-xl mb-8 text-gray-300 max-w-2xl mx-auto"
+              className="text-base sm:text-lg md:text-xl mb-8 text-gray-300 max-w-2xl mx-auto"
               data-aos="fade-up"
               data-aos-delay="400"
             >
@@ -361,20 +339,20 @@ const MainContent = () => {
               results
             </p>
             <div
-              className="flex justify-center space-x-4"
+              className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4"
               data-aos="zoom-in"
               data-aos-delay="600"
             >
               <button
                 onClick={() => navigate("/contact")}
-                className="relative inline-flex items-center px-6 py-3 overflow-hidden text-base font-medium text-white bg-[#8DC63F] rounded-full hover:bg-[#72A730] transition-all duration-300 group"
+                className="relative inline-flex items-center justify-center px-6 py-3 overflow-hidden text-base font-medium text-white bg-[#8DC63F] rounded-full hover:bg-[#72A730] transition-all duration-300 group"
               >
                 <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-white rounded-full group-hover:w-56 group-hover:h-56 opacity-10"></span>
                 <span className="relative">Get Started</span>
               </button>
               <button
                 onClick={() => navigate("/services")}
-                className="relative inline-flex items-center px-6 py-3 overflow-hidden text-base font-medium text-white border-2 border-[#8DC63F] rounded-full hover:bg-[#8DC63F] transition-all duration-300 group"
+                className="relative inline-flex items-center justify-center px-6 py-3 overflow-hidden text-base font-medium text-white border-2 border-[#8DC63F] rounded-full hover:bg-[#8DC63F] transition-all duration-300 group"
               >
                 <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-white rounded-full group-hover:w-56 group-hover:h-56 opacity-10"></span>
                 <span className="relative">Our Services</span>
@@ -385,7 +363,7 @@ const MainContent = () => {
       </motion.section>
 
       {/* Trusted by Industry Leaders */}
-      <section className="py-16 bg-white">
+      <section className="py-12 sm:py-16 bg-white">
         <div className="container mx-auto px-4">
           <h2
             className="text-2xl md:text-3xl font-bold text-center text-gray-900 mb-4"
@@ -394,14 +372,14 @@ const MainContent = () => {
             Trusted by Industry Leaders
           </h2>
           <p
-            className="text-center text-gray-600 mb-12 max-w-2xl mx-auto"
+            className="text-center text-gray-600 mb-8 sm:mb-12 max-w-2xl mx-auto"
             data-aos="fade-up"
             data-aos-delay="100"
           >
             Join hundreds of businesses that trust HMS Marketing Solutions for
             their digital growth
           </p>
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-8 items-center justify-items-center">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-8 items-center justify-items-center">
             {[
               {
                 name: "Microsoft",
@@ -430,16 +408,16 @@ const MainContent = () => {
             ].map((client, index) => (
               <motion.div
                 key={index}
-                className="w-full max-w-[200px]"
+                className="w-full max-w-[150px] sm:max-w-[200px]"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <div className="group relative w-full h-[100px] bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg">
+                <div className="group relative w-full h-[80px] sm:h-[100px] bg-white rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg">
                   {/* Name Display */}
                   <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#8DC63F]/10 to-[#72A730]/5 p-4 transition-opacity duration-300 group-hover:opacity-0">
-                    <h3 className="text-lg font-semibold text-gray-800 text-center">
+                    <h3 className="text-sm sm:text-lg font-semibold text-gray-800 text-center">
                       {client.name}
                     </h3>
                   </div>
@@ -449,7 +427,7 @@ const MainContent = () => {
                     <img
                       src={client.logo}
                       alt={`${client.name} logo`}
-                      className="w-full h-full object-contain filter grayscale group-hover:grayscale-0 transition-all duration-300"
+                      className="max-h-full max-w-full object-contain"
                       loading="lazy"
                     />
                   </div>
@@ -457,191 +435,136 @@ const MainContent = () => {
               </motion.div>
             ))}
           </div>
-          <div
-            className="text-center mt-6"
-            data-aos="fade-up"
-            data-aos-delay="400"
-          >
-            <Link
-              to="/portfolio"
-              className="text-[#8DC63F] hover:text-[#72A730] font-medium inline-flex items-center gap-2 transition-colors group"
-            >
-              View Success Stories
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 transform transition-transform group-hover:translate-x-1"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </Link>
-          </div>
         </div>
       </section>
 
       {/* Services Overview */}
       <section
         ref={servicesRef}
-        className="relative py-20 bg-gradient-to-b from-gray-50 via-white to-gray-100 z-10"
+        className="py-16 bg-white"
       >
-        {/* Add subtle background pattern */}
-        <div className="absolute inset-0 bg-[#8DC63F]/5 opacity-30"></div>
-
-        <div className="container mx-auto px-4 relative z-20">
-          {/* Section title */}
-          <div className="text-center mb-16">
-            <h2
-              className="text-4xl md:text-5xl font-bold text-gray-900 mb-4"
-              data-aos="fade-down"
-            >
-              Our Services
-            </h2>
-            <p
-              className="text-gray-600 max-w-2xl mx-auto"
-              data-aos="fade-up"
-              data-aos-delay="100"
-            >
-              Comprehensive digital solutions tailored to your business needs
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-            {[
-              {
-                icon: (
-                  <MdOutlineRocketLaunch className="text-4xl md:text-6xl text-white" />
-                ),
-                title: "Digital Marketing",
-                description:
-                  "Strategic campaigns that reach your target audience",
-                gradient: "from-[#8DC63F] to-[#72A730]",
-                path: "/services#digital-marketing",
-              },
-              {
-                icon: (
-                  <FaChartLine className="text-4xl md:text-6xl text-white" />
-                ),
-                title: "Growth Strategy",
-                description: "Data-driven approaches to scale your business",
-                gradient: "from-[#8DC63F] to-[#72A730]",
-                path: "/services#growth-strategy",
-              },
-              {
-                icon: (
-                  <MdBrandingWatermark className="text-4xl md:text-6xl text-white" />
-                ),
-                title: "Brand Development",
-                description: "Create a powerful and memorable brand identity",
-                gradient: "from-[#8DC63F] to-[#72A730]",
-                path: "/services#brand-development",
-              },
-              {
-                icon: (
-                  <MdCampaign className="text-4xl md:text-6xl text-white" />
-                ),
-                title: "Social Media",
-                description: "Engage your audience across all platforms",
-                gradient: "from-[#8DC63F] to-[#72A730]",
-                path: "/services#social-media",
-              },
-            ].map((service, index) => (
-              <div
-                key={index}
-                className="bg-white p-6 md:p-8 rounded-2xl shadow-lg transition-all duration-300 active:scale-95 md:hover:-translate-y-2 hover:shadow-xl border border-gray-100"
-                onClick={() => navigate(service.path)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    navigate(service.path);
-                  }
-                }}
-                tabIndex={0}
-                role="button"
-                aria-label={`Learn more about ${service.title}`}
-                data-aos="fade-up"
-                data-aos-once="true"
-                data-aos-delay={isMobile ? index * 50 : index * 100}
-              >
-                <div
-                  className={`mb-4 md:mb-6 w-16 md:w-20 h-16 md:h-20 rounded-2xl flex items-center justify-center bg-gradient-to-r ${service.gradient} transform transition-transform hover:rotate-6 shadow-md`}
-                >
-                  {service.icon}
-                </div>
-                <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4 text-gray-900">
-                  {service.title}
-                </h3>
-                <p className="text-sm md:text-base text-gray-600 leading-relaxed">
-                  {service.description}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          {/* Add View All Services link */}
-          <div
-            className="text-center mt-12"
-            data-aos="fade-up"
-            data-aos-delay="200"
+        {/* Section title */}
+        <div className="text-center mb-16">
+          <h2
+            className="text-4xl md:text-5xl font-bold text-gray-900 mb-4"
+            data-aos="fade-down"
           >
-            <Link
-              to="/services"
-              className="inline-flex items-center gap-2 text-[#8DC63F] hover:text-[#72A730] font-medium transition-colors group"
-            >
-              View All Services
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 transform transition-transform group-hover:translate-x-1"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </Link>
-          </div>
+            Our Services
+          </h2>
+          <p
+            className="text-gray-600 max-w-2xl mx-auto"
+            data-aos="fade-up"
+            data-aos-delay="100"
+          >
+            Comprehensive digital solutions tailored to your business needs
+          </p>
         </div>
-      </section>
 
-      {/* Key Statistics */}
-      <section className="relative bg-gradient-to-r from-black via-gray-900 to-black text-white">
-        <div className="container mx-auto px-4 py-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 md:gap-8">
-            {[
-              { number: 500, suffix: "+", label: "Projects Completed" },
-              { number: 95, suffix: "%", label: "Client Satisfaction" },
-              { number: 150, suffix: "%", label: "Average ROI" },
-              { number: 50, suffix: "+", label: "Industry Awards" },
-            ].map((stat, index) => (
-              <StatCounter
-                key={index}
-                number={stat.number}
-                suffix={stat.suffix}
-                label={stat.label}
-                delay={index * 100}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+          {[
+            {
+              icon: (
+                <MdOutlineRocketLaunch className="text-4xl md:text-6xl text-white" />
+              ),
+              title: "Digital Marketing",
+              description:
+                "Strategic campaigns that reach your target audience",
+              gradient: "from-[#8DC63F] to-[#72A730]",
+              path: "/services#digital-marketing",
+            },
+            {
+              icon: (
+                <FaChartLine className="text-4xl md:text-6xl text-white" />
+              ),
+              title: "Growth Strategy",
+              description: "Data-driven approaches to scale your business",
+              gradient: "from-[#8DC63F] to-[#72A730]",
+              path: "/services#growth-strategy",
+            },
+            {
+              icon: (
+                <MdBrandingWatermark className="text-4xl md:text-6xl text-white" />
+              ),
+              title: "Brand Development",
+              description: "Create a powerful and memorable brand identity",
+              gradient: "from-[#8DC63F] to-[#72A730]",
+              path: "/services#brand-development",
+            },
+            {
+              icon: (
+                <MdCampaign className="text-4xl md:text-6xl text-white" />
+              ),
+              title: "Social Media",
+              description: "Engage your audience across all platforms",
+              gradient: "from-[#8DC63F] to-[#72A730]",
+              path: "/services#social-media",
+            },
+          ].map((service, index) => (
+            <div
+              key={index}
+              className="bg-white p-6 md:p-8 rounded-2xl shadow-lg transition-all duration-300 active:scale-95 md:hover:-translate-y-2 hover:shadow-xl border border-gray-100"
+              onClick={() => navigate(service.path)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  navigate(service.path);
+                }
+              }}
+              tabIndex={0}
+              role="button"
+              aria-label={`Learn more about ${service.title}`}
+              data-aos="fade-up"
+              data-aos-once="true"
+              data-aos-delay={isMobile ? index * 50 : index * 100}
+            >
+              <div
+                className={`mb-4 md:mb-6 w-16 md:w-20 h-16 md:h-20 rounded-2xl flex items-center justify-center bg-gradient-to-r ${service.gradient} transform transition-transform hover:rotate-6 shadow-md`}
+              >
+                {service.icon}
+              </div>
+              <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4 text-gray-900">
+                {service.title}
+              </h3>
+              <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+                {service.description}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        {/* Add View All Services link */}
+        <div
+          className="text-center mt-12"
+          data-aos="fade-up"
+          data-aos-delay="200"
+        >
+          <Link
+            to="/services"
+            className="inline-flex items-center gap-2 text-[#8DC63F] hover:text-[#72A730] font-medium transition-colors group"
+          >
+            View All Services
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 transform transition-transform group-hover:translate-x-1"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                clipRule="evenodd"
               />
-            ))}
-          </div>
+            </svg>
+          </Link>
         </div>
       </section>
 
       {/* About Section */}
-      <motion.section
+      <section
         ref={aboutRef}
-        initial="hidden"
-        animate={isAboutVisible ? "visible" : "hidden"}
-        variants={scrollAnimationVariants}
-        className="py-20 relative overflow-hidden"
+        className="py-16 bg-gray-50"
       >
-        <div className="absolute inset-0 bg-gradient-to-br from-[#8DC63F]/5 via-white to-[#8DC63F]/5 opacity-50"></div>
-        <div className="container mx-auto px-4 relative">
+        <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
             <div data-aos="fade-right">
               <h2 className="text-5xl font-bold mb-8 bg-gradient-to-r from-[#8DC63F] to-[#72A730] bg-clip-text text-transparent">
@@ -686,46 +609,17 @@ const MainContent = () => {
             </div>
           </div>
         </div>
-      </motion.section>
+      </section>
 
-      {/* Testimonials Section - Add this before the CTA section */}
+      {/* Testimonials Section */}
       <TestimonialsSection />
 
       {/* CTA Section */}
-      <motion.section
+      <section
         ref={ctaRef}
-        initial="hidden"
-        animate={isCtaVisible ? "visible" : "hidden"}
-        variants={scrollAnimationVariants}
-        className="py-20 relative overflow-hidden"
+        className="py-16 bg-black text-white"
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-gray-900 to-black"></div>
-
-        {/* Animated background */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -inset-[10%] opacity-10">
-            {[...Array(8)].map((_, i) => (
-              <div
-                key={i}
-                className="absolute rounded-full bg-[#8DC63F]"
-                style={{
-                  top: `${Math.random() * 100}%`,
-                  left: `${Math.random() * 100}%`,
-                  width: `${Math.random() * 80 + 100}px`,
-                  height: `${Math.random() * 80 + 100}px`,
-                  opacity: Math.random() * 0.2 + 0.1,
-                  animation: `gentleFloat ${
-                    Math.random() * 20 + 30
-                  }s ease-in-out infinite`,
-                  animationDelay: `${Math.random() * 15}s`,
-                  filter: "blur(8px)",
-                }}
-              ></div>
-            ))}
-          </div>
-        </div>
-
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto">
             <h2
               className="text-5xl font-bold mb-8 text-white"
@@ -752,197 +646,8 @@ const MainContent = () => {
             </div>
           </div>
         </div>
-      </motion.section>
-
-      {/* Meta Tags */}
-      <MetaTags />
-
-      {/* Enhanced animation keyframes */}
-      <style jsx>{`
-        @keyframes float {
-          0% {
-            transform: translateY(0) translateX(0);
-          }
-          25% {
-            transform: translateY(-20px) translateX(10px);
-          }
-          50% {
-            transform: translateY(0) translateX(20px);
-          }
-          75% {
-            transform: translateY(20px) translateX(10px);
-          }
-          100% {
-            transform: translateY(0) translateX(0);
-          }
-        }
-
-        @keyframes gentleFloat {
-          0% {
-            transform: translate(0, 0) scale(1);
-          }
-          25% {
-            transform: translate(20px, -15px) scale(1.05);
-          }
-          50% {
-            transform: translate(40px, 0) scale(1);
-          }
-          75% {
-            transform: translate(20px, 15px) scale(0.95);
-          }
-          100% {
-            transform: translate(0, 0) scale(1);
-          }
-        }
-
-        .counter-anim {
-          animation: countUp 2s ease-out forwards;
-          opacity: 0;
-        }
-
-        @keyframes countUp {
-          0% {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        .perspective-1000 {
-          perspective: 1000px;
-        }
-
-        .backface-hidden {
-          backface-visibility: hidden;
-        }
-
-        .rotateY-180 {
-          transform: rotateY(180deg);
-        }
-
-        .transform-gpu {
-          transform-style: preserve-3d;
-          will-change: transform;
-        }
-
-        @media (max-width: 768px) {
-          @keyframes gentleFloat {
-            0% {
-              transform: translate(0, 0) scale(1);
-            }
-            25% {
-              transform: translate(10px, -8px) scale(1.03);
-            }
-            50% {
-              transform: translate(20px, 0) scale(1);
-            }
-            75% {
-              transform: translate(10px, 8px) scale(0.97);
-            }
-            100% {
-              transform: translate(0, 0) scale(1);
-            }
-          }
-        }
-
-        @keyframes glow {
-          0%,
-          100% {
-            opacity: 0.5;
-            transform: scale(1);
-          }
-          50% {
-            opacity: 0.7;
-            transform: scale(1.1);
-          }
-        }
-      `}</style>
+      </section>
     </div>
-  );
-};
-
-const StatCounter = ({ number, suffix, label, delay }) => {
-  const [ref, inView] = useInView({
-    threshold: 0.1,
-    triggerOnce: true,
-    rootMargin: "-50px",
-  });
-
-  const [hasStarted, setHasStarted] = useState(false);
-
-  useEffect(() => {
-    if (inView && !hasStarted) {
-      setHasStarted(true);
-    }
-  }, [inView]);
-
-  return (
-    <div
-      ref={ref}
-      className="text-center p-4"
-      role="region"
-      aria-label={`${label} Statistics`}
-    >
-      <div className="text-4xl font-bold mb-2">
-        {hasStarted ? (
-          <CountUp
-            start={0}
-            end={number}
-            suffix={suffix}
-            duration={2}
-            useEasing={true}
-            enableScrollSpy={true}
-            scrollSpyDelay={delay}
-            aria-live="polite"
-          />
-        ) : (
-          <span>0{suffix}</span>
-        )}
-      </div>
-      <div className="text-gray-200">{label}</div>
-    </div>
-  );
-};
-
-const MetaTags = () => {
-  // Get the current path to create a proper canonical URL
-  const currentPath =
-    typeof window !== "undefined" ? window.location.pathname : "";
-  const canonicalUrl =
-    typeof window !== "undefined"
-      ? `${window.location.origin}${currentPath}`
-      : "";
-
-  return (
-    <Helmet>
-      <html lang="en" />
-      <title>
-        HMS Marketing - Transform Your Business with Digital Marketing
-      </title>
-      <meta
-        name="description"
-        content="HMS Marketing helps businesses grow through innovative digital marketing strategies, brand development, and data-driven solutions."
-      />
-      <meta
-        name="keywords"
-        content="digital marketing, business growth, brand development, social media marketing, marketing strategy, HMS Marketing"
-      />
-      <meta name="robots" content="index, follow" />
-      <meta
-        property="og:title"
-        content="HMS Marketing - Transform Your Business"
-      />
-      <meta
-        property="og:description"
-        content="Innovative marketing solutions that drive growth and deliver results"
-      />
-      <meta property="og:type" content="website" />
-      <meta name="twitter:card" content="summary_large_image" />
-      {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
-    </Helmet>
   );
 };
 

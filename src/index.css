@@ -19,9 +19,43 @@
   font-family: "Poppins", sans-serif;
 }
 
+html {
+  scroll-behavior: smooth;
+  height: -webkit-fill-available;
+  overflow-x: hidden;
+}
+
 body {
   color: var(--text-color);
   overflow-x: hidden;
+  width: 100%;
+  min-height: 100vh;
+  /* Mobile viewport height fix */
+  min-height: -webkit-fill-available;
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Improve scrolling on mobile */
+@media (max-width: 768px) {
+  html, body {
+    overflow-x: hidden;
+    position: relative;
+    overscroll-behavior-y: none;
+  }
+  
+  /* Prevent content from being cut off */
+  section {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+  
+  /* Fix for iOS height issues */
+  .min-h-screen {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+  }
 }
 
 .container {
