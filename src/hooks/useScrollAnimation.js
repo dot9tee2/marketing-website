@@ -1,82 +1,73 @@
-import { useEffect, useRef, useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useWindowSize } from "./useWindowSize";
-
-export const useScrollAnimation = (options = {}) => {
-  const {
-    threshold = 0.1,
-    root = null,
-    rootMargin = "0px",
-    triggerOnce = true,
-  } = options;
-  
-  const { isMobile } = useWindowSize();
-  
-  // On mobile, always set isVisible to true to ensure content is displayed
-  const [isVisible, setIsVisible] = useState(isMobile ? true : false);
-  const elementRef = useRef(null);
-  const hasAnimated = useRef(false);
-
-  useEffect(() => {
-    // If on mobile, always set content to visible and skip observer
-    if (isMobile) {
-      setIsVisible(true);
-      return;
-    }
-    
-    const currentElement = elementRef.current;
-
-    if (!currentElement || (triggerOnce && hasAnimated.current)) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          if (triggerOnce) {
-            hasAnimated.current = true;
-            observer.unobserve(currentElement);
-          }
-        } else if (!triggerOnce) {
-          setIsVisible(false);
-        }
-      },
-      {
-        threshold,
-        root,
-        rootMargin,
-      }
-    );
-
-    observer.observe(currentElement);
-
-    return () => {
-      if (currentElement) {
-        observer.unobserve(currentElement);
-      }
-    };
-  }, [threshold, root, rootMargin, triggerOnce, isMobile]);
-
-  // If mobile status changes, update visibility
-  useEffect(() => {
-    if (isMobile) {
-      setIsVisible(true);
-    }
-  }, [isMobile]);
-
-  return [elementRef, isVisible];
-};
 
 // Animation variants for Framer Motion
 export const scrollAnimationVariants = {
-  hidden: {
-    opacity: 0,
-    y: 20,
-  },
+  hidden: { opacity: 0, y: 30 },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
       duration: 0.6,
-      ease: [0.43, 0.13, 0.23, 0.96],
+      ease: "easeOut",
     },
   },
+};
+
+export const useScrollAnimation = (options = {}) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef(null);
+  const { isMobile } = useWindowSize();
+
+  // Default options
+  const defaultOptions = {
+    threshold: isMobile ? 0.05 : 0.1,
+    rootMargin: isMobile ? "10px" : "0px",
+    triggerOnce: true,
+  };
+
+  // Merge default options with provided options
+  const mergedOptions = { ...defaultOptions, ...options };
+
+  useEffect(() => {
+    const currentRef = ref.current;
+
+    // On mobile, we still use IntersectionObserver but with more sensitive settings
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+
+            // If triggerOnce is true, disconnect the observer after triggering
+            if (mergedOptions.triggerOnce) {
+              observer.disconnect();
+            }
+          } else if (!mergedOptions.triggerOnce) {
+            setIsVisible(false);
+          }
+        });
+      },
+      {
+        threshold: mergedOptions.threshold,
+        rootMargin: mergedOptions.rootMargin,
+      }
+    );
+
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, [
+    mergedOptions.threshold,
+    mergedOptions.rootMargin,
+    mergedOptions.triggerOnce,
+  ]);
+
+  return [ref, isVisible];
 };

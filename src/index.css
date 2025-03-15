@@ -1,124 +1,206 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --primary-color: #2563eb;
-  --secondary-color: #1e40af;
-  --accent-color: #60a5fa;
-  --text-color: #1f2937;
-  --light-bg: #f3f4f6;
+  --primary: #8dc63f;
+  --primary-dark: #72a730;
+  --secondary: #333333;
+  --accent: #ff6b6b;
+  --text: #333333;
+  --light-bg: #f5f5f5;
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
 }
 
 html {
   scroll-behavior: smooth;
-  height: -webkit-fill-available;
-  overflow-x: hidden;
 }
 
 body {
-  color: var(--text-color);
-  overflow-x: hidden;
-  width: 100%;
+  font-family: "Poppins", sans-serif;
   min-height: 100vh;
-  /* Mobile viewport height fix */
   min-height: -webkit-fill-available;
-  position: relative;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  background-color: white;
+  color: var(--text);
+}
+
+/* Fix for mobile viewport height issues */
+html,
+body {
+  height: -webkit-fill-available;
 }
 
 /* Improve scrolling on mobile */
 @media (max-width: 768px) {
-  html, body {
+  html,
+  body {
     overflow-x: hidden;
     position: relative;
-    overscroll-behavior-y: none;
+    overscroll-behavior-y: none; /* Prevent pull-to-refresh */
   }
-  
-  /* Prevent content from being cut off */
-  section {
-    padding-left: env(safe-area-inset-left);
-    padding-right: env(safe-area-inset-right);
-  }
-  
-  /* Fix for iOS height issues */
+
+  /* Fix iOS height issues */
   .min-h-screen {
     min-height: 100vh;
     min-height: -webkit-fill-available;
   }
-  
-  /* Ensure AOS elements are visible on mobile regardless of animation state */
-  [data-aos] {
-    opacity: 1 !important;
-    transform: none !important;
-    visibility: visible !important;
-    pointer-events: auto !important;
-  }
-  
-  /* Fix for Framer Motion animations on mobile */
-  .motion-reduce {
-    transition: none !important;
-    animation: none !important;
-    transform: none !important;
-  }
-  
-  /* Ensure all content is visible */
-  .opacity-0 {
-    opacity: 1 !important;
-  }
-  
-  /* Fix for any transform animations that might hide content */
-  .translate-y-20,
-  .-translate-y-20,
-  .translate-x-20,
-  .-translate-x-20 {
-    transform: none !important;
+
+  /* Ensure content isn't cut off at the bottom */
+  body {
+    padding-bottom: env(safe-area-inset-bottom, 0);
   }
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
+/* AOS animation fixes for mobile */
+[data-aos] {
+  pointer-events: auto !important;
 }
 
-.section-padding {
-  padding: 5rem 0;
+/* Ensure AOS elements are visible even before animation */
+[data-aos]:not(.aos-animate) {
+  opacity: 1 !important;
+  transform: none !important;
+  visibility: visible !important;
 }
 
-@layer components {
-  .btn-primary {
-    @apply bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition-all duration-300;
-  }
-
-  .btn-secondary {
-    @apply border-2 border-blue-600 text-blue-600 px-6 py-2 rounded-md hover:bg-blue-600 hover:text-white transition-all duration-300;
-  }
-}
-
-/* Force visibility for all content on mobile */
+/* Make AOS animations more subtle on mobile */
 @media (max-width: 768px) {
-  .force-visible {
-    opacity: 1 !important;
-    visibility: visible !important;
-    transform: none !important;
-    pointer-events: auto !important;
+  [data-aos^="fade"][data-aos^="fade"] {
+    opacity: 0;
+    transition-property: opacity, transform;
   }
-  
-  /* Apply force-visible to all sections and their children */
-  section, 
-  section > div,
-  section > div > div {
-    @apply force-visible;
+
+  [data-aos^="fade"][data-aos^="fade"].aos-animate {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+
+  [data-aos="fade-up"] {
+    transform: translate3d(0, 20px, 0);
+  }
+
+  [data-aos="fade-down"] {
+    transform: translate3d(0, -20px, 0);
+  }
+
+  [data-aos="fade-right"] {
+    transform: translate3d(-20px, 0, 0);
+  }
+
+  [data-aos="fade-left"] {
+    transform: translate3d(20px, 0, 0);
+  }
+
+  [data-aos="zoom-in"] {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  [data-aos="zoom-in"].aos-animate {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Client logo section styling */
+.client-logo-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.client-logo-container:hover,
+.client-logo-container:active,
+.client-logo-container.active {
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+  transform: translateY(-5px);
+}
+
+.client-logo-name {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    to bottom right,
+    rgba(141, 198, 63, 0.1),
+    rgba(114, 167, 48, 0.05)
+  );
+  padding: 1rem;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+}
+
+.client-logo-image {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+}
+
+.client-logo-container:hover .client-logo-name,
+.client-logo-container:active .client-logo-name,
+.client-logo-container.active .client-logo-name {
+  opacity: 0;
+}
+
+.client-logo-container:hover .client-logo-image,
+.client-logo-container:active .client-logo-image,
+.client-logo-container.active .client-logo-image {
+  opacity: 1;
+}
+
+/* Add touch support for mobile devices */
+@media (max-width: 768px) {
+  .hover-on-touch {
+    cursor: pointer;
+  }
+
+  /* Add active state for touch devices */
+  .hover-on-touch:active .client-logo-name {
+    opacity: 0;
+  }
+
+  .hover-on-touch:active .client-logo-image {
+    opacity: 1;
+  }
+}
+
+/* Service card hover effects */
+.service-card {
+  transition: all 0.3s ease;
+}
+
+.service-card:hover,
+.service-card:active {
+  transform: translateY(-8px);
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+@media (max-width: 768px) {
+  .service-card:active {
+    transform: scale(0.98);
   }
 }
