@@ -13,7 +13,7 @@ const HeroSection = ({
 
   return (
     <section
-      className={`min-h-screen pt-32 md:pt-40 flex items-center relative bg-black text-white overflow-hidden ${className}`}
+      className={`min-h-[70vh] md:min-h-screen pt-24 md:pt-32 lg:pt-40 flex items-center relative bg-black text-white overflow-hidden ${className}`}
       role="banner"
       aria-label="Hero Section"
     >
@@ -30,14 +30,14 @@ const HeroSection = ({
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center max-w-3xl mx-auto">
           <h1
-            className="text-5xl md:text-6xl font-bold mb-6 text-white"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 text-white leading-tight"
             data-aos={dataAos}
           >
             {title}
           </h1>
           {subtitle && (
             <p
-              className="text-xl text-gray-300 max-w-2xl mx-auto"
+              className="text-base sm:text-lg md:text-xl text-gray-300 max-w-2xl mx-auto"
               data-aos={dataAos}
               data-aos-delay={dataAosDelay}
             >

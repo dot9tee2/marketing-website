@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
-import { FaMapMarkerAlt, FaPhone, FaEnvelope } from "react-icons/fa";
+import {
+  FaMapMarkerAlt,
+  FaPhone,
+  FaEnvelope,
+  FaWhatsapp,
+} from "react-icons/fa";
 import PageHeader from "../components/PageHeader";
 import ContactForm from "../components/ContactForm";
 import HeroSection from "../components/HeroSection";
@@ -40,17 +45,30 @@ const Contact = () => {
     {
       icon: <FaMapMarkerAlt className="text-2xl" />,
       title: "Visit Us",
-      details: ["123 Business Street", "Suite 100", "New York, NY 10001"],
+      details: ["15AA, DHA Phase4, Lahore,Pakistan-74200"],
+      link: "https://maps.app.goo.gl/rciuCQor5rmPks1t5",
+      linkText: "Open in Google Maps",
     },
     {
       icon: <FaPhone className="text-2xl" />,
       title: "Call Us",
-      details: ["+1 (555) 123-4567", "Mon-Fri: 9am-6pm EST"],
+      details: ["+92 318 4187515", "Mon-Fri: 9am-6pm EST"],
+      link: "tel:+923184187515",
+      linkText: "Click to Call",
     },
     {
       icon: <FaEnvelope className="text-2xl" />,
       title: "Email Us",
       details: ["info@hmsmarketing.com", "support@hmsmarketing.com"],
+      link: "mailto:info@hmsmarketing.com",
+      linkText: "Send Email",
+    },
+    {
+      icon: <FaWhatsapp className="text-2xl" />,
+      title: "WhatsApp",
+      details: ["+92 318 4187515", "Available 24/7"],
+      link: "https://wa.me/+923184187515",
+      linkText: "Chat on WhatsApp",
     },
   ];
 
@@ -69,12 +87,12 @@ const Contact = () => {
         subtitle="Let's discuss how we can help grow your business"
       />
 
-      <section className="py-20">
+      <section className="py-12">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
             {/* Contact Form */}
-            <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-8">
+            <div className="bg-white p-8 rounded-xl shadow-sm">
+              <h2 className="text-3xl font-bold text-gray-900 mb-6">
                 Send Us a Message
               </h2>
 
@@ -83,7 +101,7 @@ const Contact = () => {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  className={`mb-6 p-4 rounded-lg ${
+                  className={`mb-4 p-4 rounded-lg ${
                     formSubmitStatus.type === "success"
                       ? "bg-green-50 text-green-800"
                       : "bg-red-50 text-red-800"
@@ -100,47 +118,45 @@ const Contact = () => {
             </div>
 
             {/* Contact Information */}
-            <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-8">
+            <div className="bg-white p-8 rounded-xl shadow-sm h-fit">
+              <h2 className="text-3xl font-bold text-gray-900 mb-6">
                 Get in Touch
               </h2>
-              <div className="space-y-8">
+              <div className="grid grid-cols-1 gap-4">
                 {contactInfo.map((info, index) => (
-                  <motion.div
+                  <motion.a
+                    href={info.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     key={index}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.1 }}
-                    className="flex items-start gap-4"
+                    className="block p-4 bg-gray-50 rounded-xl hover:shadow-md transition-all duration-300 border border-gray-100"
                   >
-                    <div className="w-12 h-12 bg-[#8DC63F]/10 rounded-lg flex items-center justify-center text-[#8DC63F]">
-                      {info.icon}
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 bg-[#8DC63F]/10 rounded-lg flex items-center justify-center text-[#8DC63F] shrink-0">
+                        {info.icon}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-xl font-semibold text-gray-900 mb-1">
+                          {info.title}
+                        </h3>
+                        {info.details.map((detail, i) => (
+                          <p key={i} className="text-gray-600 leading-relaxed">
+                            {detail}
+                          </p>
+                        ))}
+                        <span className="inline-block mt-2 text-[#8DC63F] font-medium hover:underline">
+                          {info.linkText}
+                        </span>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                        {info.title}
-                      </h3>
-                      {info.details.map((detail, i) => (
-                        <p key={i} className="text-gray-600 leading-relaxed">
-                          {detail}
-                        </p>
-                      ))}
-                    </div>
-                  </motion.div>
+                  </motion.a>
                 ))}
-              </div>
-
-              {/* Map */}
-              <div className="mt-12">
-                <iframe
-                  title="Office Location"
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d193595.15830869428!2d-74.119763973046!3d40.69766374874431!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2s!4v1645564756836!5m2!1sen!2s"
-                  className="w-full h-[400px] rounded-lg shadow-lg"
-                  style={{ border: 0 }}
-                  allowFullScreen=""
-                  loading="lazy"
-                />
               </div>
             </div>
           </div>

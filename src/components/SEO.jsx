@@ -10,7 +10,7 @@ const SEO = ({
   ogType = "website",
   schema,
 }) => {
-  const siteTitle = "Your Site Name"; // Replace with your site name
+  const siteTitle = "HMS Marketing"; // Updated from "Your Site Name"
   const fullTitle = title ? `${title} | ${siteTitle}` : siteTitle;
 
   return (

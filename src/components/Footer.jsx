@@ -1,6 +1,14 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { FaFacebook, FaTwitter, FaLinkedin, FaInstagram } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaYoutube,
+  FaLinkedin,
+  FaInstagram,
+  FaPhone,
+  FaEnvelope,
+  FaMapMarkerAlt,
+} from "react-icons/fa";
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -17,13 +25,15 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
           <motion.div {...fadeInUp} className="space-y-4">
-            <h3 className="text-2xl font-bold text-[#8DC63F]">HMS Marketing</h3>
+            <h3 className="text-2xl font-bold text-[#8DC63F]">
+              HMS Marketing Solutions
+            </h3>
             <p className="text-gray-400">
               Transforming businesses through innovative marketing solutions.
             </p>
             <div className="flex space-x-4">
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/thehmsmarketingsolutions"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-[#8DC63F] transition-colors duration-300"
@@ -31,15 +41,15 @@ const Footer = () => {
                 <FaFacebook size={24} />
               </a>
               <a
-                href="https://twitter.com"
+                href="https://youtube.com/@thehmsmarketingsolutions"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-[#8DC63F] transition-colors duration-300"
               >
-                <FaTwitter size={24} />
+                <FaYoutube size={24} />
               </a>
               <a
-                href="https://linkedin.com"
+                href="linkedin.com/in/thehmsofficial"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-[#8DC63F] transition-colors duration-300"
@@ -47,7 +57,7 @@ const Footer = () => {
                 <FaLinkedin size={24} />
               </a>
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/thehmsmarketingsolutions/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-[#8DC63F] transition-colors duration-300"
@@ -66,7 +76,7 @@ const Footer = () => {
               <li>
                 <button
                   onClick={() => navigate("/")}
-                  className="text-gray-400 hover:text-[#8DC63F] transition-colors duration-300"
+                  className="text-gray-400 hover:text-[#8DC63F] transition-colors duration-300 cursor-pointer"
                 >
                   Home
                 </button>
@@ -74,7 +84,7 @@ const Footer = () => {
               <li>
                 <button
                   onClick={() => navigate("/about")}
-                  className="text-gray-400 hover:text-[#8DC63F] transition-colors duration-300"
+                  className="text-gray-400 hover:text-[#8DC63F] transition-colors duration-300 cursor-pointer"
                 >
                   About Us
                 </button>
@@ -82,7 +92,7 @@ const Footer = () => {
               <li>
                 <button
                   onClick={() => navigate("/services")}
-                  className="text-gray-400 hover:text-[#8DC63F] transition-colors duration-300"
+                  className="text-gray-400 hover:text-[#8DC63F] transition-colors duration-300 cursor-pointer"
                 >
                   Services
                 </button>
@@ -90,7 +100,7 @@ const Footer = () => {
               <li>
                 <button
                   onClick={() => navigate("/portfolio")}
-                  className="text-gray-400 hover:text-[#8DC63F] transition-colors duration-300"
+                  className="text-gray-400 hover:text-[#8DC63F] transition-colors duration-300 cursor-pointer"
                 >
                   Portfolio
                 </button>
@@ -108,16 +118,13 @@ const Footer = () => {
                 Digital Marketing
               </li>
               <li className="text-gray-400 hover:text-[#8DC63F] transition-colors duration-300 cursor-pointer">
-                Content Strategy
-              </li>
-              <li className="text-gray-400 hover:text-[#8DC63F] transition-colors duration-300 cursor-pointer">
-                Brand Development
-              </li>
-              <li className="text-gray-400 hover:text-[#8DC63F] transition-colors duration-300 cursor-pointer">
                 Social Media Management
               </li>
               <li className="text-gray-400 hover:text-[#8DC63F] transition-colors duration-300 cursor-pointer">
-                SEO Optimization
+                Video Production & Editing
+              </li>
+              <li className="text-gray-400 hover:text-[#8DC63F] transition-colors duration-300 cursor-pointer">
+                Graphic Designing
               </li>
             </ul>
           </motion.div>
@@ -126,10 +133,27 @@ const Footer = () => {
           <motion.div {...fadeInUp} className="space-y-4">
             <h4 className="text-xl font-semibold text-[#8DC63F]">Contact Us</h4>
             <div className="space-y-2">
-              <p className="text-gray-400">123 Marketing Street</p>
-              <p className="text-gray-400">Business District, BZ 12345</p>
-              <p className="text-gray-400">Phone: (555) 123-4567</p>
-              <p className="text-gray-400">Email: info@hmsmarketing.com</p>
+              <a
+                href="https://maps.app.goo.gl/rciuCQor5rmPks1t5"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 flex items-center cursor-pointer hover:text-[#8DC63F] transition-colors duration-300"
+              >
+                <FaMapMarkerAlt className="mr-2" /> 15AA, DHA Phase4, Lahore,
+                Pakistan-74200
+              </a>
+              <a
+                href="tel:+923184187515"
+                className="text-gray-400 flex items-center cursor-pointer hover:text-[#8DC63F] transition-colors duration-300"
+              >
+                <FaPhone className="mr-2" /> +92 318 4187515
+              </a>
+              <a
+                href="mailto:info@hmsmarketing.com"
+                className="text-gray-400 flex items-center cursor-pointer hover:text-[#8DC63F] transition-colors duration-300"
+              >
+                <FaEnvelope className="mr-2" /> info@hmsmarketing.com
+              </a>
             </div>
           </motion.div>
         </div>
@@ -145,6 +169,7 @@ const Footer = () => {
             &copy; {new Date().getFullYear()} HMS Marketing Solutions. All
             rights reserved.
           </p>
+          <p>Created with ♡ by Mehroz</p>
         </motion.div>
       </div>
     </footer>

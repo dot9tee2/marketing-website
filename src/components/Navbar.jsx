@@ -55,7 +55,8 @@ const Navbar = () => {
   ];
 
   const handleScroll = useCallback(() => {
-    setScrolled(window.scrollY > 50);
+    const triggerHeight = window.innerHeight * 0.1; // Changed from 0.5 to 0.1 for better mobile experience
+    setScrolled(window.scrollY > triggerHeight);
   }, []);
 
   useEffect(() => {
@@ -72,12 +73,12 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed w-full z-[100] transition-all duration-300 backdrop-blur-sm ${
-        isHome
-          ? scrolled
-            ? "bg-black/95 shadow-lg py-4"
-            : "bg-transparent/20 py-6"
-          : "bg-black/95 shadow-lg py-4"
+      className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 ease-in-out ${
+        scrolled && !isOpen ? "translate-y-[-100%]" : "translate-y-0"
+      } ${
+        isHome && !scrolled
+          ? "bg-transparent py-4 md:py-6"
+          : "bg-black/95 py-3 md:py-4 shadow-lg"
       }`}
       role="navigation"
       aria-label="Main navigation"
@@ -86,11 +87,11 @@ const Navbar = () => {
         <div className="flex justify-between items-center">
           <Link
             to="/"
-            className="flex items-center space-x-3"
+            className="flex items-center space-x-2 md:space-x-3"
             aria-label="HMS Marketing - Home"
           >
             <motion.div
-              className="h-[80px] w-[80px] rounded-full overflow-hidden flex items-center justify-center border-2 border-[#8DC63F] bg-transparent"
+              className="h-[50px] w-[50px] md:h-[80px] md:w-[80px] rounded-full overflow-hidden flex items-center justify-center border-2 border-[#8DC63F] bg-transparent"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
@@ -110,12 +111,13 @@ const Navbar = () => {
               />
             </motion.div>
             <motion.h1
-              className="text-2xl font-bold text-[#8DC63F]"
+              className="text-lg md:text-2xl font-bold text-[#8DC63F] truncate"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
             >
-              HMS Marketing Solutions
+              <span className="hidden sm:inline">HMS Marketing Solutions</span>
+              <span className="sm:hidden">HMS Marketing</span>
             </motion.h1>
           </Link>
 
@@ -147,7 +149,7 @@ const Navbar = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-[#8DC63F] hover:text-[#72A730] transition-colors p-2"
+            className="md:hidden text-[#8DC63F] hover:text-[#72A730] transition-colors p-2 z-50"
             onClick={() => setIsOpen(!isOpen)}
             aria-expanded={isOpen}
             aria-controls="mobile-menu"
@@ -171,7 +173,7 @@ const Navbar = () => {
               aria-label="Mobile navigation"
             >
               <div
-                className="flex flex-col space-y-4"
+                className="flex flex-col space-y-6 py-2"
                 role="menubar"
                 aria-orientation="vertical"
               >
@@ -182,6 +184,7 @@ const Navbar = () => {
                     animate={{ x: 0, opacity: 1 }}
                     transition={{ delay: index * 0.1 }}
                     role="menuitem"
+                    className="text-center"
                   >
                     <NavLink
                       to={link.path}
@@ -190,7 +193,7 @@ const Navbar = () => {
                       scrolled={scrolled}
                       onClick={() => setIsOpen(false)}
                     >
-                      {link.title}
+                      <span className="text-lg font-medium">{link.title}</span>
                     </NavLink>
                   </motion.div>
                 ))}

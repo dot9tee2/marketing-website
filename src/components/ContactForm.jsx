@@ -17,6 +17,7 @@ const ContactForm = ({
     name: "",
     email: "",
     phone: "",
+    subject: "",
     message: "",
     preferredContact: "email",
     bestTime: "anytime",
@@ -114,6 +115,7 @@ const ContactForm = ({
         name: "",
         email: "",
         phone: "",
+        subject: "",
         message: "",
         preferredContact: "email",
         bestTime: "anytime",
@@ -122,20 +124,22 @@ const ContactForm = ({
       setErrors({});
     } catch (error) {
       onSubmitError(error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
-  const inputClasses = `peer w-full px-4 py-3 rounded-lg border bg-white/50 focus:border-[#8DC63F] focus:ring-2 focus:ring-[#8DC63F]/20 transition-all duration-300 outline-none border-gray-300 placeholder-transparent`;
+  const inputClasses = `peer w-full px-3 py-2.5 sm:px-4 sm:py-3 rounded-lg border bg-white/50 focus:border-[#8DC63F] focus:ring-2 focus:ring-[#8DC63F]/20 transition-all duration-300 outline-none border-gray-300 placeholder-transparent text-sm sm:text-base`;
 
-  const labelClasses = `absolute left-4 -top-2.5 bg-white px-1 text-sm transition-all duration-300 
-    peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3.5 
-    peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-[#8DC63F]`;
+  const labelClasses = `absolute left-3 sm:left-4 -top-2.5 bg-white px-1 text-xs sm:text-sm transition-all duration-300 
+    peer-placeholder-shown:text-sm sm:peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 sm:peer-placeholder-shown:top-3.5 
+    peer-focus:-top-2.5 peer-focus:text-xs sm:peer-focus:text-sm peer-focus:text-[#8DC63F]`;
 
-  const selectClasses = `w-full px-4 py-3 rounded-lg border bg-white/50 focus:border-[#8DC63F] focus:ring-2 focus:ring-[#8DC63F]/20 transition-all duration-300 outline-none border-gray-300`;
+  const selectClasses = `w-full px-3 py-2.5 sm:px-4 sm:py-3 rounded-lg border bg-white/50 focus:border-[#8DC63F] focus:ring-2 focus:ring-[#8DC63F]/20 transition-all duration-300 outline-none border-gray-300 text-sm sm:text-base`;
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6 relative z-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -157,7 +161,7 @@ const ContactForm = ({
             Your Name
           </label>
           {touched.name && errors.name && (
-            <p className="mt-1 text-sm text-red-500 relative z-10">
+            <p className="mt-1 text-xs sm:text-sm text-red-500 relative z-10">
               {errors.name}
             </p>
           )}
@@ -182,7 +186,7 @@ const ContactForm = ({
             Phone Number
           </label>
           {touched.phone && errors.phone && (
-            <p className="mt-1 text-sm text-red-500">{errors.phone}</p>
+            <p className="mt-1 text-xs sm:text-sm text-red-500">{errors.phone}</p>
           )}
         </motion.div>
       </div>
@@ -202,72 +206,20 @@ const ContactForm = ({
           onChange={handleChange}
           onBlur={handleBlur}
           className={inputClasses}
-          placeholder="john@example.com"
+          placeholder="email@example.com"
         />
         <label htmlFor="email" className={labelClasses}>
           Email Address
         </label>
         {touched.email && errors.email && (
-          <p className="mt-1 text-sm text-red-500">{errors.email}</p>
+          <p className="mt-1 text-xs sm:text-sm text-red-500">{errors.email}</p>
         )}
       </motion.div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="relative"
-        >
-          <label
-            htmlFor="preferredContact"
-            className="block text-sm font-medium text-gray-700 mb-1"
-          >
-            Preferred Contact Method
-          </label>
-          <select
-            id="preferredContact"
-            name="preferredContact"
-            value={formData.preferredContact}
-            onChange={handleChange}
-            className={selectClasses}
-          >
-            <option value="email">Email</option>
-            <option value="phone">Phone</option>
-          </select>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="relative"
-        >
-          <label
-            htmlFor="bestTime"
-            className="block text-sm font-medium text-gray-700 mb-1"
-          >
-            Best Time to Contact
-          </label>
-          <select
-            id="bestTime"
-            name="bestTime"
-            value={formData.bestTime}
-            onChange={handleChange}
-            className={selectClasses}
-          >
-            <option value="anytime">Anytime</option>
-            <option value="morning">Morning (9AM - 12PM)</option>
-            <option value="afternoon">Afternoon (12PM - 5PM)</option>
-            <option value="evening">Evening (5PM - 8PM)</option>
-          </select>
-        </motion.div>
-      </div>
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6 }}
+        transition={{ delay: 0.4 }}
         className="relative"
       >
         <input
@@ -279,20 +231,20 @@ const ContactForm = ({
           onChange={handleChange}
           onBlur={handleBlur}
           className={inputClasses}
-          placeholder="How can we help you?"
+          placeholder="Subject"
         />
         <label htmlFor="subject" className={labelClasses}>
           Subject
         </label>
         {touched.subject && errors.subject && (
-          <p className="mt-1 text-sm text-red-500">{errors.subject}</p>
+          <p className="mt-1 text-xs sm:text-sm text-red-500">{errors.subject}</p>
         )}
       </motion.div>
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.7 }}
+        transition={{ delay: 0.5 }}
         className="relative"
       >
         <textarea
@@ -304,78 +256,96 @@ const ContactForm = ({
           onChange={handleChange}
           onBlur={handleBlur}
           className={inputClasses}
-          placeholder="Tell us about your project..."
-        />
+          placeholder="Your message here..."
+        ></textarea>
         <label htmlFor="message" className={labelClasses}>
           Your Message
         </label>
         {touched.message && errors.message && (
-          <p className="mt-1 text-sm text-red-500">{errors.message}</p>
+          <p className="mt-1 text-xs sm:text-sm text-red-500">{errors.message}</p>
         )}
       </motion.div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6 }}
+        >
+          <label htmlFor="preferredContact" className="block text-sm sm:text-base font-medium text-gray-700 mb-1">
+            Preferred Contact Method
+          </label>
+          <select
+            id="preferredContact"
+            name="preferredContact"
+            value={formData.preferredContact}
+            onChange={handleChange}
+            className={selectClasses}
+          >
+            <option value="email">Email</option>
+            <option value="phone">Phone</option>
+            <option value="either">Either</option>
+          </select>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7 }}
+        >
+          <label htmlFor="bestTime" className="block text-sm sm:text-base font-medium text-gray-700 mb-1">
+            Best Time to Contact
+          </label>
+          <select
+            id="bestTime"
+            name="bestTime"
+            value={formData.bestTime}
+            onChange={handleChange}
+            className={selectClasses}
+          >
+            <option value="anytime">Anytime</option>
+            <option value="morning">Morning</option>
+            <option value="afternoon">Afternoon</option>
+            <option value="evening">Evening</option>
+          </select>
+        </motion.div>
+      </div>
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.8 }}
-        className="flex justify-end"
+        className="flex justify-center"
       >
-        <motion.button
+        <button
           type="submit"
           disabled={isSubmitting}
-          className={`
-            inline-flex items-center gap-2 px-6 py-3 rounded-lg text-white font-medium
-            ${
-              isSubmitting
-                ? "bg-gray-400 cursor-not-allowed"
-                : "bg-[#8DC63F] hover:bg-[#72A730] active:bg-[#5C8A26]"
-            }
-            transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg
-          `}
-          whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
-          whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
+          className="bg-[#8DC63F] hover:bg-[#72A730] text-white px-6 py-3 rounded-lg shadow-lg transition-all duration-300 flex items-center justify-center space-x-2 w-full sm:w-auto disabled:opacity-70 disabled:cursor-not-allowed text-sm sm:text-base"
         >
           {isSubmitting ? (
             <>
-              <svg
-                className="animate-spin h-5 w-5 text-white"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                ></circle>
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                ></path>
-              </svg>
-              <span>Sending...</span>
+              <span className="animate-pulse">Sending...</span>
+              <span className="animate-spin">
+                <FaPaperPlane className="ml-2" />
+              </span>
             </>
           ) : (
             <>
-              <FaPaperPlane className="text-sm" />
               <span>Send Message</span>
+              <FaPaperPlane className="ml-2" />
             </>
           )}
-        </motion.button>
+        </button>
       </motion.div>
     </form>
   );
 };
 
 ContactForm.propTypes = {
-  onSubmitSuccess: PropTypes.func,
-  onSubmitError: PropTypes.func,
-  isSubmitting: PropTypes.bool,
-  setIsSubmitting: PropTypes.func,
+  onSubmitSuccess: PropTypes.func.isRequired,
+  onSubmitError: PropTypes.func.isRequired,
+  isSubmitting: PropTypes.bool.isRequired,
+  setIsSubmitting: PropTypes.func.isRequired,
 };
 
 export default ContactForm;
