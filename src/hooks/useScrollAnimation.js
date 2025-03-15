@@ -11,16 +11,18 @@ export const useScrollAnimation = (options = {}) => {
   
   const { isMobile } = useWindowSize();
   
-  // Use a lower threshold on mobile devices for better performance
-  const mobileThreshold = isMobile ? 0.05 : threshold;
-  // Use a larger root margin on mobile to trigger animations earlier
-  const mobileRootMargin = isMobile ? "10px" : rootMargin;
-
-  const [isVisible, setIsVisible] = useState(false);
+  // On mobile, always set isVisible to true to ensure content is displayed
+  const [isVisible, setIsVisible] = useState(isMobile ? true : false);
   const elementRef = useRef(null);
   const hasAnimated = useRef(false);
 
   useEffect(() => {
+    // If on mobile, always set content to visible and skip observer
+    if (isMobile) {
+      setIsVisible(true);
+      return;
+    }
+    
     const currentElement = elementRef.current;
 
     if (!currentElement || (triggerOnce && hasAnimated.current)) return;
@@ -38,9 +40,9 @@ export const useScrollAnimation = (options = {}) => {
         }
       },
       {
-        threshold: mobileThreshold,
+        threshold,
         root,
-        rootMargin: mobileRootMargin,
+        rootMargin,
       }
     );
 
@@ -51,7 +53,14 @@ export const useScrollAnimation = (options = {}) => {
         observer.unobserve(currentElement);
       }
     };
-  }, [mobileThreshold, root, mobileRootMargin, triggerOnce, isMobile]);
+  }, [threshold, root, rootMargin, triggerOnce, isMobile]);
+
+  // If mobile status changes, update visibility
+  useEffect(() => {
+    if (isMobile) {
+      setIsVisible(true);
+    }
+  }, [isMobile]);
 
   return [elementRef, isVisible];
 };

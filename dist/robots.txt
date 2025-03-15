@@ -1,0 +1,16 @@
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://hmsmarketing.com/sitemap.xml
+
+# Prevent crawling of certain paths
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+Disallow: /*.json$
+Disallow: /*?*
+
+# Crawl-delay for all bots
+Crawl-delay: 10 

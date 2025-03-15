@@ -132,17 +132,10 @@ const TestimonialsSection = () => {
     <section className="py-20 bg-gradient-to-b from-white to-gray-50 relative overflow-hidden">
       <div className="absolute inset-0 bg-[#8DC63F]/5 opacity-50"></div>
       <div className="container mx-auto px-4 relative">
-        <h2
-          className="text-4xl md:text-5xl font-bold text-center mb-4"
-          data-aos="fade-down"
-        >
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-4">
           Client Success Stories
         </h2>
-        <p
-          className="text-gray-600 text-center mb-12 max-w-2xl mx-auto"
-          data-aos="fade-up"
-          data-aos-delay="100"
-        >
+        <p className="text-gray-600 text-center mb-12 max-w-2xl mx-auto">
           Hear from businesses that have transformed their digital presence with
           HMS Marketing
         </p>
@@ -183,17 +176,17 @@ const Home = () => {
   const { isMobile } = useWindowSize();
 
   useEffect(() => {
-    // Initialize AOS animation library with mobile-friendly settings
-    AOS.init({
-      duration: isMobile ? 600 : 800,
-      once: isMobile ? true : false, // Set to true on mobile to prevent re-animation
-      mirror: false, // Disable mirror effect on mobile
-      offset: isMobile ? 30 : 50, // Smaller offset on mobile
-      delay: 0,
-      easing: "ease-out-cubic",
-      disable: 'phone', // Disable AOS on phones if it's causing performance issues
-      throttleDelay: 99, // Increase throttle delay for better performance
-    });
+    // Completely disable AOS on mobile devices to prevent rendering issues
+    if (!isMobile) {
+      AOS.init({
+        duration: 800,
+        once: true,
+        mirror: false,
+        offset: 50,
+        delay: 0,
+        easing: "ease-out-cubic",
+      });
+    }
 
     const checkAssetsLoaded = () => {
       if (document.readyState === "complete") {
@@ -216,12 +209,12 @@ const Home = () => {
 
   // Refresh AOS when loading state changes
   useEffect(() => {
-    if (!isLoading) {
+    if (!isLoading && !isMobile) {
       setTimeout(() => {
         AOS.refresh();
       }, 500);
     }
-  }, [isLoading]);
+  }, [isLoading, isMobile]);
 
   // SEO configuration
   const seoData = {
@@ -274,14 +267,20 @@ const MainContent = () => {
   const [ctaRef, isCtaVisible] = useScrollAnimation();
   const [servicesRef, isServicesVisible] = useScrollAnimation();
 
+  // Helper function to conditionally apply AOS attributes
+  const getAosProps = (animation, delay = 0) => {
+    if (isMobile) return {}; // Return empty object for mobile
+    return {
+      "data-aos": animation,
+      "data-aos-delay": delay,
+    };
+  };
+
   return (
     <div className="relative">
       {/* Hero Section */}
-      <motion.section
+      <section
         ref={heroRef}
-        initial="hidden"
-        animate={isHeroVisible ? "visible" : "hidden"}
-        variants={scrollAnimationVariants}
         className="min-h-[90vh] md:min-h-screen flex items-center relative bg-black text-white overflow-hidden"
       >
         {/* Optimized cursor glow effect */}
@@ -304,8 +303,7 @@ const MainContent = () => {
           <div className="max-w-6xl mx-auto pointer-events-auto">
             <h1
               className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6 text-white flex flex-col items-center gap-2 text-center max-w-6xl mx-auto"
-              data-aos="fade-down"
-              data-aos-delay="200"
+              {...getAosProps("fade-down", 200)}
             >
               <div className="h-[60px] sm:h-[72px] flex items-center">
                 <TypeAnimation
@@ -332,16 +330,14 @@ const MainContent = () => {
             </h1>
             <p
               className="text-base sm:text-lg md:text-xl mb-8 text-gray-300 max-w-2xl mx-auto"
-              data-aos="fade-up"
-              data-aos-delay="400"
+              {...getAosProps("fade-up", 400)}
             >
               Innovative marketing solutions that drive growth and deliver
               results
             </p>
             <div
               className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4"
-              data-aos="zoom-in"
-              data-aos-delay="600"
+              {...getAosProps("zoom-in", 600)}
             >
               <button
                 onClick={() => navigate("/contact")}
@@ -360,21 +356,20 @@ const MainContent = () => {
             </div>
           </div>
         </div>
-      </motion.section>
+      </section>
 
       {/* Trusted by Industry Leaders */}
       <section className="py-12 sm:py-16 bg-white">
         <div className="container mx-auto px-4">
           <h2
             className="text-2xl md:text-3xl font-bold text-center text-gray-900 mb-4"
-            data-aos="fade-down"
+            {...getAosProps("fade-down")}
           >
             Trusted by Industry Leaders
           </h2>
           <p
             className="text-center text-gray-600 mb-8 sm:mb-12 max-w-2xl mx-auto"
-            data-aos="fade-up"
-            data-aos-delay="100"
+            {...getAosProps("fade-up", 100)}
           >
             Join hundreds of businesses that trust HMS Marketing Solutions for
             their digital growth
@@ -439,23 +434,13 @@ const MainContent = () => {
       </section>
 
       {/* Services Overview */}
-      <section
-        ref={servicesRef}
-        className="py-16 bg-white"
-      >
+      <section ref={servicesRef} className="py-16 bg-white">
         {/* Section title */}
         <div className="text-center mb-16">
-          <h2
-            className="text-4xl md:text-5xl font-bold text-gray-900 mb-4"
-            data-aos="fade-down"
-          >
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Our Services
           </h2>
-          <p
-            className="text-gray-600 max-w-2xl mx-auto"
-            data-aos="fade-up"
-            data-aos-delay="100"
-          >
+          <p className="text-gray-600 max-w-2xl mx-auto">
             Comprehensive digital solutions tailored to your business needs
           </p>
         </div>
@@ -473,9 +458,7 @@ const MainContent = () => {
               path: "/services#digital-marketing",
             },
             {
-              icon: (
-                <FaChartLine className="text-4xl md:text-6xl text-white" />
-              ),
+              icon: <FaChartLine className="text-4xl md:text-6xl text-white" />,
               title: "Growth Strategy",
               description: "Data-driven approaches to scale your business",
               gradient: "from-[#8DC63F] to-[#72A730]",
@@ -491,9 +474,7 @@ const MainContent = () => {
               path: "/services#brand-development",
             },
             {
-              icon: (
-                <MdCampaign className="text-4xl md:text-6xl text-white" />
-              ),
+              icon: <MdCampaign className="text-4xl md:text-6xl text-white" />,
               title: "Social Media",
               description: "Engage your audience across all platforms",
               gradient: "from-[#8DC63F] to-[#72A730]",
@@ -513,9 +494,6 @@ const MainContent = () => {
               tabIndex={0}
               role="button"
               aria-label={`Learn more about ${service.title}`}
-              data-aos="fade-up"
-              data-aos-once="true"
-              data-aos-delay={isMobile ? index * 50 : index * 100}
             >
               <div
                 className={`mb-4 md:mb-6 w-16 md:w-20 h-16 md:h-20 rounded-2xl flex items-center justify-center bg-gradient-to-r ${service.gradient} transform transition-transform hover:rotate-6 shadow-md`}
@@ -533,11 +511,7 @@ const MainContent = () => {
         </div>
 
         {/* Add View All Services link */}
-        <div
-          className="text-center mt-12"
-          data-aos="fade-up"
-          data-aos-delay="200"
-        >
+        <div className="text-center mt-12">
           <Link
             to="/services"
             className="inline-flex items-center gap-2 text-[#8DC63F] hover:text-[#72A730] font-medium transition-colors group"
@@ -560,13 +534,10 @@ const MainContent = () => {
       </section>
 
       {/* About Section */}
-      <section
-        ref={aboutRef}
-        className="py-16 bg-gray-50"
-      >
+      <section ref={aboutRef} className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-            <div data-aos="fade-right">
+            <div>
               <h2 className="text-5xl font-bold mb-8 bg-gradient-to-r from-[#8DC63F] to-[#72A730] bg-clip-text text-transparent">
                 Why Choose HMS Marketing?
               </h2>
@@ -585,8 +556,6 @@ const MainContent = () => {
                   <div
                     key={index}
                     className="flex items-center space-x-4 group"
-                    data-aos="fade-up"
-                    data-aos-delay={index * 100}
                   >
                     <div className="w-3 h-3 bg-[#8DC63F] rounded-full transform transition-transform group-hover:scale-150" />
                     <span className="text-gray-700 group-hover:text-[#8DC63F] transition-colors duration-300">
@@ -596,7 +565,7 @@ const MainContent = () => {
                 ))}
               </div>
             </div>
-            <div className="relative" data-aos="fade-left">
+            <div className="relative">
               <div className="absolute inset-0 bg-gradient-to-r from-[#8DC63F] to-[#72A730] rounded-2xl transform rotate-6 scale-105 opacity-20 blur-xl"></div>
               <div className="relative rounded-2xl overflow-hidden shadow-2xl transform transition-transform hover:scale-[1.02]">
                 <LazyImage
@@ -615,27 +584,17 @@ const MainContent = () => {
       <TestimonialsSection />
 
       {/* CTA Section */}
-      <section
-        ref={ctaRef}
-        className="py-16 bg-black text-white"
-      >
+      <section ref={ctaRef} className="py-16 bg-black text-white">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto">
-            <h2
-              className="text-5xl font-bold mb-8 text-white"
-              data-aos="fade-down"
-            >
+            <h2 className="text-5xl font-bold mb-8 text-white">
               Ready to Grow Your Business?
             </h2>
-            <p
-              className="text-2xl mb-12 text-gray-200"
-              data-aos="fade-up"
-              data-aos-delay="200"
-            >
+            <p className="text-2xl mb-12 text-gray-200">
               Let's work together to create a marketing strategy that drives
               results.
             </p>
-            <div data-aos="zoom-in" data-aos-delay="400">
+            <div>
               <Link
                 to="/contact"
                 className="inline-block bg-[#8DC63F] text-white px-12 py-4 rounded-full text-xl font-semibold hover:bg-[#72A730] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 relative overflow-hidden group"

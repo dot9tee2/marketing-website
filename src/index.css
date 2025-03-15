@@ -56,6 +56,34 @@ body {
     min-height: 100vh;
     min-height: -webkit-fill-available;
   }
+  
+  /* Ensure AOS elements are visible on mobile regardless of animation state */
+  [data-aos] {
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+    pointer-events: auto !important;
+  }
+  
+  /* Fix for Framer Motion animations on mobile */
+  .motion-reduce {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+  
+  /* Ensure all content is visible */
+  .opacity-0 {
+    opacity: 1 !important;
+  }
+  
+  /* Fix for any transform animations that might hide content */
+  .translate-y-20,
+  .-translate-y-20,
+  .translate-x-20,
+  .-translate-x-20 {
+    transform: none !important;
+  }
 }
 
 .container {
@@ -75,5 +103,22 @@ body {
 
   .btn-secondary {
     @apply border-2 border-blue-600 text-blue-600 px-6 py-2 rounded-md hover:bg-blue-600 hover:text-white transition-all duration-300;
+  }
+}
+
+/* Force visibility for all content on mobile */
+@media (max-width: 768px) {
+  .force-visible {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    pointer-events: auto !important;
+  }
+  
+  /* Apply force-visible to all sections and their children */
+  section, 
+  section > div,
+  section > div > div {
+    @apply force-visible;
   }
 }
