@@ -754,32 +754,6 @@ const MainContent = () => {
         </div>
       </motion.section>
 
-      {/* Mobile-specific elements */}
-      {isMobile && (
-        <>
-          <div className="fixed bottom-20 left-4 z-[9999] flex flex-col gap-4">
-            <a
-              href="tel:+1234567890"
-              className="bg-[#8DC63F] p-4 rounded-full shadow-lg hover:bg-[#72A730] transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#8DC63F]"
-              aria-label="Call us"
-            >
-              <FaPhone className="w-6 h-6 text-white" aria-hidden="true" />
-            </a>
-          </div>
-          <div className="fixed bottom-8 right-4 z-[9999]">
-            <button
-              className="bg-[#8DC63F] p-4 rounded-full shadow-lg hover:bg-[#72A730] transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#8DC63F] active:scale-95"
-              aria-label="Open chat"
-              onClick={() => {
-                console.log("Chat functionality to be implemented");
-              }}
-            >
-              <BsChatDots className="w-6 h-6 text-white" aria-hidden="true" />
-            </button>
-          </div>
-        </>
-      )}
-
       {/* Meta Tags */}
       <MetaTags />
 
