@@ -5,12 +5,21 @@ export const useMousePosition = (throttleMs = 16) => {
   const [isMoving, setIsMoving] = useState(false);
 
   const handleMouseMove = useCallback((e) => {
-    const { clientX, clientY } = e.touches ? e.touches[0] : e;
-
-    setPosition((prev) => ({
-      x: prev.x + (clientX - prev.x) * 0.15,
-      y: prev.y + (clientY - prev.y) * 0.15,
-    }));
+    // Check if it's a touch event and if it exists
+    if (e.touches && e.touches.length > 0) {
+      const { clientX, clientY } = e.touches[0];
+      setPosition({
+        x: clientX,
+        y: clientY,
+      });
+    } else if (!e.touches) {
+      // Regular mouse event
+      const { clientX, clientY } = e;
+      setPosition({
+        x: clientX,
+        y: clientY,
+      });
+    }
 
     setIsMoving(true);
 
@@ -19,26 +28,17 @@ export const useMousePosition = (throttleMs = 16) => {
   }, []);
 
   useEffect(() => {
-    let rafId;
-    let lastUpdate = 0;
-
-    const animatePosition = (timestamp) => {
-      if (timestamp - lastUpdate >= throttleMs) {
-        lastUpdate = timestamp;
-      }
-      rafId = requestAnimationFrame(animatePosition);
-    };
-
+    // For desktop
     window.addEventListener("mousemove", handleMouseMove, { passive: true });
+
+    // For mobile - add touchstart to initialize position immediately
+    window.addEventListener("touchstart", handleMouseMove, { passive: true });
     window.addEventListener("touchmove", handleMouseMove, { passive: true });
-    rafId = requestAnimationFrame(animatePosition);
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("touchstart", handleMouseMove);
       window.removeEventListener("touchmove", handleMouseMove);
-      if (rafId) {
-        cancelAnimationFrame(rafId);
-      }
     };
   }, [handleMouseMove, throttleMs]);
 

@@ -53,21 +53,23 @@ const TESTIMONIALS = [
 
 // Create a memoized testimonial component
 const TestimonialCard = memo(({ testimonial, isActive }) => {
+  const { isMobile } = useWindowSize();
+
   return (
     <motion.div
       className="absolute inset-0 w-full"
-      initial={{ opacity: 0, x: 100 }}
+      initial={{ opacity: 0, x: isMobile ? 50 : 100 }}
       animate={{
         opacity: isActive ? 1 : 0,
-        x: isActive ? 0 : -100,
+        x: isActive ? 0 : isMobile ? -50 : -100,
         pointerEvents: isActive ? "auto" : "none",
       }}
-      transition={{ duration: 0.5, ease: "easeInOut" }}
+      transition={{ duration: isMobile ? 0.3 : 0.5, ease: "easeInOut" }}
     >
-      <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 relative h-full">
-        <FaQuoteLeft className="text-4xl text-[#8DC63F]/20 absolute top-8 left-8" />
-        <div className="flex flex-col md:flex-row items-center gap-8 h-full">
-          <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden shadow-lg flex-shrink-0">
+      <div className="bg-white rounded-2xl shadow-xl p-6 md:p-12 relative h-full">
+        <FaQuoteLeft className="text-3xl md:text-4xl text-[#8DC63F]/20 absolute top-6 md:top-8 left-6 md:left-8" />
+        <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8 h-full">
+          <div className="w-20 h-20 md:w-32 md:h-32 rounded-full overflow-hidden shadow-lg flex-shrink-0">
             <LazyImage
               src={testimonial.image}
               alt={testimonial.name}
@@ -75,11 +77,11 @@ const TestimonialCard = memo(({ testimonial, isActive }) => {
             />
           </div>
           <div className="flex-1">
-            <p className="text-gray-700 text-lg md:text-xl leading-relaxed mb-6">
+            <p className="text-base md:text-xl leading-relaxed mb-4 md:mb-6">
               "{testimonial.content}"
             </p>
             <div>
-              <h4 className="text-xl font-semibold text-gray-900">
+              <h4 className="text-lg md:text-xl font-semibold text-gray-900">
                 {testimonial.name}
               </h4>
               <p className="text-[#8DC63F]">{testimonial.position}</p>
@@ -185,17 +187,17 @@ const Home = () => {
   useEffect(() => {
     // Configure AOS with appropriate settings for both desktop and mobile
     AOS.init({
-      duration: isMobile ? 600 : 1000,
-      once: isMobile ? true : false, // Allow repeated animations on desktop
-      mirror: isMobile ? false : true,
-      offset: isMobile ? 30 : 120,
+      duration: isMobile ? 400 : 1000,
+      once: true, // Always set to true for mobile to prevent performance issues
+      mirror: false, // Disable mirror on mobile
+      offset: isMobile ? 10 : 120,
       delay: isMobile ? 0 : 100,
       easing: "ease-out-cubic",
       disable: false,
       startEvent: "DOMContentLoaded",
-      // Add debugger to see if AOS is initializing correctly
-      debounceDelay: 50,
-      throttleDelay: 99,
+      debounceDelay: isMobile ? 10 : 50,
+      throttleDelay: isMobile ? 30 : 99,
+      anchorPlacement: "top-bottom",
     });
 
     const checkAssetsLoaded = () => {
@@ -287,14 +289,25 @@ const MainContent = () => {
         variants={scrollAnimationVariants}
         className="min-h-[90vh] md:min-h-screen flex items-center relative bg-black text-white overflow-hidden"
       >
-        {/* Optimized cursor glow effect */}
-        <motion.div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: `radial-gradient(circle at ${position.x}px ${position.y}px, rgba(142, 198, 63, 0.51) 0%, transparent 35%)`,
-            opacity: 0.6,
-          }}
-        />
+        {/* Optimized cursor glow effect - conditionally render based on device */}
+        {!isMobile ? (
+          <motion.div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: `radial-gradient(circle at ${position.x}px ${position.y}px, rgba(142, 198, 63, 0.51) 0%, transparent 35%)`,
+              opacity: 0.6,
+            }}
+          />
+        ) : (
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background:
+                "radial-gradient(circle at 50% 30%, rgba(142, 198, 63, 0.51) 0%, transparent 70%)",
+              opacity: 0.4,
+            }}
+          />
+        )}
 
         {/* Scroll indicator instead of swipe */}
         {isMobile && (

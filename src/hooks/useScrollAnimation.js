@@ -5,9 +5,9 @@ import { useWindowSize } from "./useWindowSize";
 export const scrollAnimationVariants = {
   hidden: {
     opacity: 0,
-    y: 50,
+    y: 20,
     transition: {
-      duration: 0.4,
+      duration: 0.3,
       ease: [0.43, 0.13, 0.23, 0.96],
     },
   },
@@ -15,7 +15,7 @@ export const scrollAnimationVariants = {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.8,
+      duration: 0.5,
       ease: [0.43, 0.13, 0.23, 0.96],
     },
   },
@@ -28,9 +28,9 @@ export const useScrollAnimation = (options = {}) => {
 
   // Default options - more sensitive on mobile
   const defaultOptions = {
-    threshold: isMobile ? 0.05 : 0.15,
-    rootMargin: isMobile ? "10px" : "-50px",
-    triggerOnce: isMobile ? true : false,
+    threshold: isMobile ? 0.01 : 0.15,
+    rootMargin: isMobile ? "0px" : "-50px",
+    triggerOnce: true,
   };
 
   // Merge default options with provided options
