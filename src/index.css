@@ -57,18 +57,18 @@ body {
   body {
     padding-bottom: env(safe-area-inset-bottom, 0);
   }
+
+  /* Ensure AOS elements are visible on mobile even before animation */
+  [data-aos]:not(.aos-animate) {
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
+  }
 }
 
-/* AOS animation fixes for mobile */
+/* AOS animation fixes */
 [data-aos] {
   pointer-events: auto !important;
-}
-
-/* Ensure AOS elements are visible even before animation */
-[data-aos]:not(.aos-animate) {
-  opacity: 1 !important;
-  transform: none !important;
-  visibility: visible !important;
 }
 
 /* Make AOS animations more subtle on mobile */

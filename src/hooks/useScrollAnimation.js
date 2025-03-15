@@ -3,13 +3,20 @@ import { useWindowSize } from "./useWindowSize";
 
 // Animation variants for Framer Motion
 export const scrollAnimationVariants = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: {
+    opacity: 0,
+    y: 50,
+    transition: {
+      duration: 0.4,
+      ease: [0.43, 0.13, 0.23, 0.96],
+    },
+  },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.6,
-      ease: "easeOut",
+      duration: 0.8,
+      ease: [0.43, 0.13, 0.23, 0.96],
     },
   },
 };
@@ -19,11 +26,11 @@ export const useScrollAnimation = (options = {}) => {
   const ref = useRef(null);
   const { isMobile } = useWindowSize();
 
-  // Default options
+  // Default options - more sensitive on mobile
   const defaultOptions = {
-    threshold: isMobile ? 0.05 : 0.1,
-    rootMargin: isMobile ? "10px" : "0px",
-    triggerOnce: true,
+    threshold: isMobile ? 0.05 : 0.15,
+    rootMargin: isMobile ? "10px" : "-50px",
+    triggerOnce: isMobile ? true : false,
   };
 
   // Merge default options with provided options
@@ -32,31 +39,29 @@ export const useScrollAnimation = (options = {}) => {
   useEffect(() => {
     const currentRef = ref.current;
 
-    // On mobile, we still use IntersectionObserver but with more sensitive settings
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true);
+    if (!currentRef) return;
 
-            // If triggerOnce is true, disconnect the observer after triggering
-            if (mergedOptions.triggerOnce) {
-              observer.disconnect();
-            }
-          } else if (!mergedOptions.triggerOnce) {
-            setIsVisible(false);
-          }
-        });
-      },
-      {
-        threshold: mergedOptions.threshold,
-        rootMargin: mergedOptions.rootMargin,
+    const observerCallback = (entries) => {
+      const [entry] = entries;
+      if (entry.isIntersecting) {
+        setIsVisible(true);
+
+        // If triggerOnce is true, disconnect the observer after triggering
+        if (mergedOptions.triggerOnce) {
+          observer.disconnect();
+        }
+      } else if (!mergedOptions.triggerOnce) {
+        // Only reset visibility if we're not using triggerOnce
+        setIsVisible(false);
       }
-    );
+    };
 
-    if (currentRef) {
-      observer.observe(currentRef);
-    }
+    const observer = new IntersectionObserver(observerCallback, {
+      threshold: mergedOptions.threshold,
+      rootMargin: mergedOptions.rootMargin,
+    });
+
+    observer.observe(currentRef);
 
     return () => {
       if (currentRef) {

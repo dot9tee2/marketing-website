@@ -183,18 +183,19 @@ const Home = () => {
   const { isMobile } = useWindowSize();
 
   useEffect(() => {
-    // Configure AOS with mobile-friendly settings
+    // Configure AOS with appropriate settings for both desktop and mobile
     AOS.init({
-      duration: isMobile ? 600 : 800,
-      once: true,
-      mirror: false,
-      offset: isMobile ? 30 : 50,
-      delay: 0,
+      duration: isMobile ? 600 : 1000,
+      once: isMobile ? true : false, // Allow repeated animations on desktop
+      mirror: isMobile ? false : true,
+      offset: isMobile ? 30 : 120,
+      delay: isMobile ? 0 : 100,
       easing: "ease-out-cubic",
-      // Don't disable on mobile, just use different settings
       disable: false,
-      // Use smaller animations on mobile
       startEvent: "DOMContentLoaded",
+      // Add debugger to see if AOS is initializing correctly
+      debounceDelay: 50,
+      throttleDelay: 99,
     });
 
     const checkAssetsLoaded = () => {
