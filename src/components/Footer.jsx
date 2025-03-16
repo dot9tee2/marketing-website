@@ -49,7 +49,7 @@ const Footer = () => {
                 <FaYoutube size={24} />
               </a>
               <a
-                href="linkedin.com/in/thehmsofficial"
+                href="https://linkedin.com/in/thehmsofficial"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-[#8DC63F] transition-colors duration-300"
