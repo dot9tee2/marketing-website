@@ -13,8 +13,8 @@ const NavLink = memo(
         isActive
           ? "text-[#8DC63F]"
           : isHome && !scrolled
-          ? "text-white hover:text-[#8DC63F]"
-          : "text-gray-300 hover:text-[#8DC63F]"
+            ? "text-white hover:text-[#8DC63F]"
+            : "text-gray-300 hover:text-[#8DC63F]"
       } transition-colors`}
       onClick={onClick}
       aria-current={isActive ? "page" : undefined}

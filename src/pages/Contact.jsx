@@ -14,6 +14,8 @@ import HeroSection from "../components/HeroSection";
 const Contact = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [formSubmitStatus, setFormSubmitStatus] = useState(null);
+  // Add state for isSubmitting
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -114,6 +116,8 @@ const Contact = () => {
               <ContactForm
                 onSubmitSuccess={handleFormSubmitSuccess}
                 onSubmitError={handleFormSubmitError}
+                isSubmitting={isSubmitting} // Pass isSubmitting
+                setIsSubmitting={setIsSubmitting} // Pass setIsSubmitting
               />
             </div>
 
