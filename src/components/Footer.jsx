@@ -1,5 +1,6 @@
-import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import gsap from "gsap";
 import {
   FaFacebook,
   FaYoutube,
@@ -13,10 +14,26 @@ import {
 const Footer = () => {
   const navigate = useNavigate();
 
-  const fadeInUp = {
-    initial: { y: 20, opacity: 0 },
-    animate: { y: 0, opacity: 1 },
-    transition: { duration: 0.5 },
+  const footerRefs = useRef([]);
+
+  useEffect(() => {
+    gsap.fromTo(
+      footerRefs.current,
+      { y: 20, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.6,
+        stagger: 0.2,
+        ease: "power3.out",
+      }
+    );
+  }, []);
+
+  const addToRefs = (el) => {
+    if (el && !footerRefs.current.includes(el)) {
+      footerRefs.current.push(el);
+    }
   };
 
   return (
@@ -24,7 +41,7 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
-          <motion.div {...fadeInUp} className="space-y-4">
+          <div ref={addToRefs} className="space-y-4">
             <h3 className="text-2xl font-bold text-[#8DC63F]">
               HMS Marketing Solutions
             </h3>
@@ -65,10 +82,10 @@ const Footer = () => {
                 <FaInstagram size={24} />
               </a>
             </div>
-          </motion.div>
+          </div>
 
           {/* Quick Links */}
-          <motion.div {...fadeInUp} className="space-y-4">
+          <div ref={addToRefs} className="space-y-4">
             <h4 className="text-xl font-semibold text-[#8DC63F]">
               Quick Links
             </h4>
@@ -106,10 +123,10 @@ const Footer = () => {
                 </button>
               </li>
             </ul>
-          </motion.div>
+          </div>
 
           {/* Services */}
-          <motion.div {...fadeInUp} className="space-y-4">
+          <div ref={addToRefs} className="space-y-4">
             <h4 className="text-xl font-semibold text-[#8DC63F]">
               Our Services
             </h4>
@@ -127,10 +144,10 @@ const Footer = () => {
                 Graphic Designing
               </li>
             </ul>
-          </motion.div>
+          </div>
 
           {/* Contact Info */}
-          <motion.div {...fadeInUp} className="space-y-4">
+          <div ref={addToRefs} className="space-y-4">
             <h4 className="text-xl font-semibold text-[#8DC63F]">Contact Us</h4>
             <div className="space-y-2">
               <a
@@ -155,14 +172,12 @@ const Footer = () => {
                 <FaEnvelope className="mr-2" /> info@hmsmarketing.com
               </a>
             </div>
-          </motion.div>
+          </div>
         </div>
 
         {/* Copyright */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
+        <div
+          ref={addToRefs}
           className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400"
         >
           <p>
@@ -170,7 +185,7 @@ const Footer = () => {
             rights reserved.
           </p>
           <p>Created with ♡ by Mehroz</p>
-        </motion.div>
+        </div>
       </div>
     </footer>
   );

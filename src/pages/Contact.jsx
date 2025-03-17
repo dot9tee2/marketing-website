@@ -7,7 +7,6 @@ import {
   FaEnvelope,
   FaWhatsapp,
 } from "react-icons/fa";
-import PageHeader from "../components/PageHeader";
 import ContactForm from "../components/ContactForm";
 import HeroSection from "../components/HeroSection";
 
@@ -87,9 +86,11 @@ const Contact = () => {
       <HeroSection
         title="Contact Us"
         subtitle="Let's discuss how we can help grow your business"
+        buttonText="Send Message"
+        scrollToId="message"
       />
 
-      <section className="py-12">
+      <section id="message" className="py-12">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
             {/* Contact Form */}
