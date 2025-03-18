@@ -99,39 +99,128 @@ const About = () => {
   const team = [
     {
       name: "Hafiz M. Saqib",
-      role: "CEO & Founder",
-      image: "/images/team/john-smith.jpeg",
-      bio: "15+ years of experience in digital marketing and business strategy.",
+      role: "Co-Founder & CEO",
+      image: "/images/team/saqib.jpeg",
+      bio: "An expert in Social Media Management & Digital Marketing Strategy, Hafiz Muhammad Saqib leads the agency with a strong vision for brand growth and digital success.",
       social: {
         linkedin: "https://linkedin.com/in/john-smith",
         twitter: "https://twitter.com/john-smith",
       },
     },
     {
-      name: "Hafiz M. Saqib",
-      role: "Creative Director",
-      image: "/images/team/sarah-johnson.jpeg",
-      bio: "Award-winning creative director with expertise in brand development.",
+      name: "Sana Saqib",
+      role: "Co-Founder",
+      image: "/images/team/female_placeholder.jpg",
+      bio: "A key driving force behind HMS Marketing Solutions, Sana Saqib brings creativity and strategic insight to the agency, helping businesses achieve their marketing goals.",
       social: {
         linkedin: "https://linkedin.com/in/sarah-johnson",
         twitter: "https://twitter.com/sarah-johnson",
       },
     },
     {
-      name: "Hafiz M. Saqib",
-      role: "Technical Lead",
-      image: "/images/team/michael-chen.jpeg",
-      bio: "Full-stack developer with a passion for innovative solutions.",
+      name: "Nabiha Waseem",
+      role: "Content Writing Head",
+      image: "/images/team/female_placeholder.jpg",
+      bio: "Nabiha specializes in content strategy and SEO-driven content creation, ensuring engaging, high-quality, and optimized written material.",
       social: {
         linkedin: "https://linkedin.com/in/michael-chen",
         twitter: "https://twitter.com/michael-chen",
       },
     },
     {
-      name: "Hafiz M. Saqib",
-      role: "Marketing Strategist",
-      image: "/images/team/emma-davis.jpeg",
-      bio: "Data-driven strategist specializing in growth marketing.",
+      name: "Saba Arif",
+      role: "Video Editing Head",
+      image: "/images/team/female_placeholder.jpg",
+      bio: "Saba oversees the post-production process, ensuring high-quality video editing that enhances brand storytelling.",
+      social: {
+        linkedin: "https://linkedin.com/in/emma-davis",
+        twitter: "https://twitter.com/emma-davis",
+      },
+    },
+    {
+      name: "Arshad Bhatti",
+      role: "Video Production Head",
+      image: "/images/team/male_placeholder.jpg",
+      bio: "With expertise in professional video production, Arshad manages shoots, directing, and content creation for digital platforms.",
+      social: {
+        linkedin: "https://linkedin.com/in/emma-davis",
+        twitter: "https://twitter.com/emma-davis",
+      },
+    },
+    {
+      name: "Zoha Amjad",
+      role: "Graphics Designer Head",
+      image: "/images/team/female_placeholder.jpg",
+      bio: "Zoha leads the graphic design team, creating impactful branding and marketing visuals that capture audience attention.",
+      social: {
+        linkedin: "https://linkedin.com/in/emma-davis",
+        twitter: "https://twitter.com/emma-davis",
+      },
+    },
+    {
+      name: "Mahnoor",
+      role: "Graphics Designer",
+      image: "/images/team/female_placeholder.jpg",
+      bio: "Mahnoor designs visually compelling graphics that align with clients' branding needs.",
+      social: {
+        linkedin: "https://linkedin.com/in/emma-davis",
+        twitter: "https://twitter.com/emma-davis",
+      },
+    },
+    {
+      name: "Vaneeza",
+      role: "Graphic Designer",
+      image: "/images/team/female_placeholder.jpg",
+      bio: "Vaneeza specializes in modern and creative designs that enhance digital presence and marketing campaigns.",
+      social: {
+        linkedin: "https://linkedin.com/in/emma-davis",
+        twitter: "https://twitter.com/emma-davis",
+      },
+    },
+    {
+      name: "Usman Riaz",
+      role: "Video Producer",
+      image: "/images/team/male_placeholder.jpg",
+      bio: "Usman contributes to video production, ensuring high-quality and engaging content for marketing.",
+      social: {
+        linkedin: "https://linkedin.com/in/emma-davis",
+        twitter: "https://twitter.com/emma-davis",
+      },
+    },
+    {
+      name: "Usama Farrukh",
+      role: "Digital Ads Expert",
+      image: "/images/team/male_placeholder.jpg",
+      bio: "Usama specializes in PPC campaigns, social media ads, and performance marketing, optimizing ad strategies for maximum conversions.",
+      social: {
+        linkedin: "https://linkedin.com/in/emma-davis",
+        twitter: "https://twitter.com/emma-davis",
+      },
+    },
+    {
+      name: "Arslan Dogar",
+      role: "Web Developer",
+      image: "/images/team/male_placeholder.jpg",
+      bio: "Arslan develops responsive, SEO-friendly, and user-friendly websites, ensuring a seamless user experience.",
+      social: {
+        linkedin: "https://linkedin.com/in/emma-davis",
+        twitter: "https://twitter.com/emma-davis",
+      },
+    },
+    {
+      name: "Mehroz",
+      role: "Web Developer",
+      image: "/images/team/male_placeholder.jpg",
+      bio: "Mehroz focuses on website functionality, coding, and optimization, ensuring fast-loading and high-performing websites.",
+      social: {
+        linkedin: "https://linkedin.com/in/emma-davis",
+        twitter: "https://twitter.com/emma-davis",
+      },
+    },{
+      name: "Ans Bin Zahid",
+      role: "Web Developer",
+      image: "/images/team/male_placeholder.jpg",
+      bio: "Ans contributes to website development, UI/UX enhancements, and maintenance, ensuring a smooth digital experience for users.",
       social: {
         linkedin: "https://linkedin.com/in/emma-davis",
         twitter: "https://twitter.com/emma-davis",
