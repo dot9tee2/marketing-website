@@ -398,24 +398,24 @@ const MainContent = () => {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-8 items-center justify-items-center">
             {[
               {
-                name: "Microsoft",
-                logo: "https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg",
+                name: "PPB",
+                logo: "./public/images/companies/logoFinal.png",
               },
               {
-                name: "Google",
-                logo: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg",
+                name: "Karachiees Restaurant",
+                logo: "/public/images/companies/karachieesrestaurant.jpg",
               },
               {
-                name: "Amazon",
-                logo: "https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg",
+                name: "MBH Consultants",
+                logo: "/public/images/companies/mbhconsultants.jpg",
               },
               {
-                name: "Apple",
-                logo: "https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg",
+                name: "Suffah-e-Arqam School",
+                logo: "/public/images/companies/suffahearqam.school.jpg",
               },
               {
-                name: "Meta",
-                logo: "https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg",
+                name: "Tech Sign",
+                logo: "/public/images/companies/techSign.jpg",
               },
               {
                 name: "IBM",
