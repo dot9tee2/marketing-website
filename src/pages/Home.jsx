@@ -399,23 +399,23 @@ const MainContent = () => {
             {[
               {
                 name: "PPB",
-                logo: "./public/images/companies/logoFinal.png",
+                logo: "/images/companies/logoFinal.png",
               },
               {
                 name: "Karachiees Restaurant",
-                logo: "/public/images/companies/karachieesrestaurant.jpg",
+                logo: "/images/companies/karachieesrestaurant.jpg",
               },
               {
                 name: "MBH Consultants",
-                logo: "/public/images/companies/mbhconsultants.jpg",
+                logo: "/images/companies/mbhconsultants.jpg",
               },
               {
                 name: "Suffah-e-Arqam School",
-                logo: "/public/images/companies/suffahearqam.school.jpg",
-              },
+                logo: "/images/companies/suffahearqam.school.jpg",
+              },      
               {
                 name: "Tech Sign",
-                logo: "/public/images/companies/techSign.jpg",
+                logo: "/images/companies/techSign.jpg",
               },
               {
                 name: "IBM",
