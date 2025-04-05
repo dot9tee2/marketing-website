@@ -7,8 +7,8 @@ import {
   FaEnvelope,
   FaWhatsapp,
 } from "react-icons/fa";
-import ContactForm from "../components/ContactForm";
-import HeroSection from "../components/HeroSection";
+import ContactForm from "../components/Forms/ContactForm";
+import HeroSection from "../components/Sections/HeroSection";
 
 const Contact = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });

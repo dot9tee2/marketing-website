@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import { useMousePosition } from "../hooks/useMousePosition";
+import { useMousePosition } from "../../hooks/useMousePosition";
 import gsap from "gsap";
 import SplitType from "split-type";
 import ScrollTrigger from "gsap/ScrollTrigger";

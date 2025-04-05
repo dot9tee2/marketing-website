@@ -11,13 +11,21 @@ import {
   FaStar,
   FaLinkedin,
   FaTwitter,
+  FaHeadset,
+  FaRocket,
+  FaGlobe,
 } from "react-icons/fa";
-import PageHeader from "../components/PageHeader";
+import PageHeader from "../components/UI/PageHeader";
 import MotionWrapper from "../components/MotionWrapper";
-import HeroSection from "../components/HeroSection";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import HeroSection from "../components/Sections/HeroSection";
 import SEO from "../components/SEO";
-import LazyImage from "../components/LazyImage";
+import LazyImage from "../components/UI/LazyImage";
 import "./about.css";
+import { Helmet } from "react-helmet-async";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const About = () => {
   const { scrollY } = useScroll();

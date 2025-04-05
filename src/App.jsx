@@ -7,10 +7,11 @@ import {
 import { HelmetProvider } from "react-helmet-async";
 import { AnimatePresence, motion } from "framer-motion";
 import { Suspense, lazy, useEffect } from "react";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+import Navbar from "./layouts/Navbar";
+import Footer from "./layouts/Footer";
 import ErrorBoundary from "./components/ErrorBoundary";
-import Loading from "./components/Loading";
+import Loading from "./components/UI/Loading";
+import { ANIMATION_VARIANTS } from "./utils/constants";
 
 // Lazy load pages
 const Home = lazy(() => import("./pages/Home"));
@@ -27,6 +28,7 @@ const LoadingFallback = () => (
 );
 
 const PageTransition = ({ children }) => {
+  // Using animation variants from constants
   const pageVariants = {
     initial: {
       opacity: 0,

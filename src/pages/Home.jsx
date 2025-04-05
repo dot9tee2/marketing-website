@@ -15,7 +15,7 @@ import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";
 import { motion } from "framer-motion";
 import SEO from "../components/SEO";
-import LazyImage from "../components/LazyImage";
+import LazyImage from "../components/UI/LazyImage";
 import { useMousePosition } from "../hooks/useMousePosition";
 import {
   useScrollAnimation,

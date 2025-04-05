@@ -11,8 +11,16 @@ import {
   FaPlus,
   FaMinus,
 } from "react-icons/fa";
-import HeroSection from "../components/HeroSection";
-import ServiceCard from "../components/ServiceCard";
+import { BsChatDots } from "react-icons/bs";
+import {
+  MdOutlineRocketLaunch,
+  MdBrandingWatermark,
+  MdCampaign,
+} from "react-icons/md";
+import AOS from "aos";
+import "aos/dist/aos.css";
+import HeroSection from "../components/Sections/HeroSection";
+import ServiceCard from "../components/UI/ServiceCard";
 
 const Services = () => {
   const [selectedService, setSelectedService] = useState(null);

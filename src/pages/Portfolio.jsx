@@ -14,7 +14,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import CountUp from "react-countup";
 import { useInView } from "react-intersection-observer";
-import HeroSection from "../components/HeroSection";
+import HeroSection from "../components/Sections/HeroSection";
 const Portfolio = () => {
   const [filter, setFilter] = useState("all");
   const [viewMode, setViewMode] = useState("grid"); // grid or timeline
