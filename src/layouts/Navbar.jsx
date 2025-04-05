@@ -91,7 +91,7 @@ const Navbar = () => {
             aria-label="HMS Marketing - Home"
           >
             <motion.div
-              className="h-[50px] w-[50px] md:h-[80px] md:w-[80px] rounded-full overflow-hidden flex items-center justify-center border-2 border-[#8DC63F] bg-transparent"
+              className="h-[50px] w-[50px] md:h-[80px] md:w-[80px] rounded-full overflow-hidden flex items-center justify-center border-2 border-[#8DC63F] bg-white"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
@@ -117,7 +117,7 @@ const Navbar = () => {
               transition={{ duration: 0.5 }}
             >
               <span className="hidden sm:inline">HMS Marketing Solutions</span>
-              <span className="sm:hidden">HMS Marketing</span>
+              <span className="sm:hidden">HMS Marketing Solutions</span>
             </motion.h1>
           </Link>
 
